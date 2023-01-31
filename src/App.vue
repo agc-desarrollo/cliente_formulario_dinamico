@@ -1,0 +1,210 @@
+<template>
+  <div class="container">
+    <FormularioJSON :form_definition="f_config" :events="events"></FormularioJSON>
+  </div>
+  
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const f_config = ref({
+  "general_data": {
+    "field_options": {
+      "opciones_select_categoria": [
+        { id: 1, text: 'Categoria 1'},
+        { id: 2, text: 'Categoria 2'},
+        { id: 3, text: 'Categoria 3'},
+        { id: 4, text: 'Categoria 4'},
+      ],
+      "opciones_radio_ej": [
+        { id: 1, text: 'Radio 1'},
+        { id: 2, text: 'Radio 2'},
+        { id: 3, text: 'Radio 3'},
+        { id: 4, text: 'Radio 4'},
+      ],
+      "opciones_checkbox_ej": [
+        { id: 1, text: 'Checkbox 1'},
+        { id: 2, text: 'Checkbox 2'},
+        { id: 3, text: 'Checkbox 3'},
+        { id: 4, text: 'Checkbox 4'},
+      ]
+    },
+    "autocomplete_options": {
+      "ciudades": [ 'Tandil', 'Mar del Plata', 'Ayacucho', 'Azul', 'Bolivar', 'Capital Federal' ]
+    },
+    "initial_values": {
+      user_list_initial_values: { date:new Date(), color:'#00FF00' }
+    }
+    
+  },
+  "sections": { 
+    component: 'VFJTabsSection',
+    section_def: 
+    [
+      {
+        header: "Parte 1",
+        html_def: [
+          { css_class: 'justify-content-md-center', content: 
+            [
+              { 
+                component: 'VFJComponentGroup', css_class:'',
+                params:{ 
+                    id: "example_group_1",
+                    html_def: [
+                      { css_class: 'justify-content-md-center', content: 
+                        [{ css_class:'', component: 'VFJImage', params:{ src: "https://www.primefaces.org/primevue/demo/images/primevue-logo-dark.svg", alt: "Vue logo" } }
+                        ] 
+                      },
+                      { css_class: 'justify-content-md-center', content: 
+                        [{ css_class:'', component: 'VFJText', params:{ html: "<h1>Titulo de formulario</h1>"} }
+                        ] 
+                      },
+                      { css_class: 'justify-content-md-center', content: 
+                        [{ css_class:'', component: 'VFJTextInput', params:{ field: 'name',tooltip:"hello moto", label: 'Campo de texto', type: 'text' } },
+                        { css_class:'', component: 'VFJTextareaInput', params:{ field: 'descripcion','tooltip':'hola', label: 'Campo Textarea' } },
+                        { css_class:'', component: 'VFJSelectInput', params:{ field: 'categoria', 'tooltip':'hola', label: 'Campo Select',
+                          field_options: "opciones_select_categoria", option_id : "id", option_label: "text"
+                        } }
+                        ] 
+                      },
+                      { css_class: 'justify-content-md-center', content: 
+                        [
+                          { css_class:'', component: 'VFJRadioBtnInput', params:
+                            { field: 'radio_ej', label: 'Campo Radio Button',
+                              field_options: "opciones_radio_ej", option_id : "id", option_label: "text"
+                            } 
+                          },
+                          { css_class:'', component: 'VFJCheckboxInput', params:
+                            { field: 'checkbox_ej', label: 'Campo Checkbox',
+                              field_options: "opciones_checkbox_ej", option_id : "id", option_label: "text"
+                            } 
+                          }
+                        ] 
+                      },                      
+                    ]
+                } 
+              }
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [
+              { css_class:'', component: 'VFJDateInput', params:{ field: 'date', label: 'Campo de fecha' } },
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'test_action','tooltip':'hola', label: 'Boton de prueba' } },
+              { css_class:'', component: 'VFJColorInput', params:{ field: 'color','tooltip':'hola', label: 'Campo de selección de color' } },
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [
+              { css_class:'', component: 'VFJRangeInput', params:{ field: 'rango', range:false, min:0, step:1, max:200, label: 'Campo de selección tipo Slider' } },
+              { css_class:'', component: 'VFJFileInput', params:{ field: 'file', label: 'Campo de subida de archivos' } },
+            ] 
+          },
+          { css_class: 'justify-content-md-center', 
+            content: [
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'section_next', label: 'Siguiente' } }
+            ]
+          },
+        ],
+      },
+      {
+        header: "Parte 2",
+        html_def: [
+          { css_class: 'justify-content-md-center', content: 
+            [{ css_class:'', component: 'VFJImage', params:{ src: "https://www.primefaces.org/primevue/demo/images/primevue-logo-dark.svg", alt: "Vue logo" } }
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [{ css_class:'', component: 'VFJText', params:{ html: "<h1>Titulo de formulario Parte 2</h1>"} }
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [{ css_class:'', component: 'VFJTextInput', params:{ field: 'name', label: 'Campo de texto', type: 'text' } },
+            { css_class:'', component: 'VFJTextareaInput', params:{ field: 'descripcion', label: 'Campo Textarea' } },
+            { css_class:'', component: 'VFJSelectInput', params:{ field: 'categoria', label: 'Campo Select',
+              field_options: "opciones_select_categoria", option_id : "id", option_label: "text"
+            } }
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [
+              { css_class:'', component: 'VFJRadioBtnInput', params:
+                { field: 'radio_ej', label: 'Campo Radio Button',
+                  field_options: "opciones_radio_ej", option_id : "id", option_label: "text"
+                } 
+              },
+              { css_class:'', component: 'VFJCheckboxInput', params:
+                { field: 'checkbox_ej', label: 'Campo Checkbox',
+                  field_options: "opciones_checkbox_ej", option_id : "id", option_label: "text"
+                } 
+              }
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [
+              { css_class:'', component: 'VFJDateInput', params:{ field: 'date', label: 'Campo de fecha' } },
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'test_action', label: 'Boton de prueba' } },
+              { css_class:'', component: 'VFJColorInput', params:{ field: 'color', label: 'Campo de selección de color' } },
+            ] 
+          },
+          { css_class: 'justify-content-md-center', content: 
+            [
+              { css_class:'', component: 'VFJRangeInput', params:{ field: 'rango', range:false, min:0, step:1, max:200, label: 'Campo de selección tipo Slider' } },
+              { css_class:'', component: 'VFJFileInput', params:{ field: 'file', label: 'Campo de subida de archivos' } },
+            ] 
+          },
+          { css_class: 'justify-content-md-center', 
+            content: [
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'section_back', label: 'Anterior' } },
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'section_next', label: 'Siguiente' } }
+            ]
+          },
+        ],
+      },
+      {
+        header: "Paso Final",
+        html_def: [
+          { css_class: 'justify-content-md-center', 
+            content: [
+              { 
+                css_class:'', component: 'VFJLoopFieldGroup', 
+                params:{
+                  runtime_data_field: 'user_list',
+                  initial_values_id: 'user_list_initial_values',
+                  html_def: [
+                  { css_class: 'justify-content-md-center', content: 
+                      [
+                        { css_class:'', component: 'VFJDateInput', params:{   dfield: 'date',    label: 'Campo de fecha' } },
+                        { css_class:'', component: 'VFJButtonInput', params:{ dfield: 'btn', action: 'test_action', label: 'Boton de prueba' } },
+                        { css_class:'', component: 'VFJColorInput', params:{  dfield: 'color',  label: 'Campo de selección de color' } },
+                      ] 
+                    }
+                  ]
+                } 
+              }
+            ]
+          },
+          { css_class: 'justify-content-md-center', 
+            content: [
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'section_back', label: 'Anterior' } },
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'section_goTo', action_params:{ id: 0 }, label: 'Inicio' } },
+              { css_class:'', component: 'VFJButtonInput', params:{ action: 'submit', label: 'Confirmar' } }
+            ]
+          },
+        ]
+      }
+    ]
+  }
+  
+})
+const events = ref({
+  _input: async (e) => { console.log(e) },
+  _submit: async (e) => { console.log(e) }
+})
+</script>
+
+<style>
+.component-group{
+  background-color: #ddd;
+}
+</style>
