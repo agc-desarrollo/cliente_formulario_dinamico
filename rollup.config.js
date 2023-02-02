@@ -8,11 +8,11 @@ export default [
     output: [
       {
         format: 'esm',
-        file: 'dist/library.min.mjs',
+        file: 'dist/library.mjs',
       },
       {
         format: 'cjs',
-        file: 'dist/library.min.js',
+        file: 'dist/library.js',
       }
     ],
     plugins: [

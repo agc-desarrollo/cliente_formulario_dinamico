@@ -12,7 +12,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@agc-desarrollo/cliente_formulario_dinamico": "latest",
+    "@agc-desarrollo/cliente_formulario_dinamico": "0.1.2",
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
     "primeicons": "^6.0.1",
