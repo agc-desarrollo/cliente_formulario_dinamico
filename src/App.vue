@@ -1,12 +1,16 @@
 <template>
   <div class="container">
-    <FormularioJSON :form_definition="f_config" :events="events"></FormularioJSON>
+    <FormularioJSON :form_definition="f_config" :events="events" v-model="form_data"></FormularioJSON>
+
+    {{ form_data }}
   </div>
   
 </template>
 
 <script setup>
 import { ref } from 'vue'
+
+const form_data = ref()
 
 const f_config = ref({
   "general_data": {
