@@ -1,16 +1,4 @@
-# Cliente Formulario Dinámico
+# Vue3 Cliente Formulario Dinámico
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run dev
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
+# Change Log
+- **0.1.1**: Proyecto base para avanzar con desarrollo del componente

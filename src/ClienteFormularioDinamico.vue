@@ -1,10 +1,9 @@
 <template>
-  <div class="container">
+    Cliente Formulario Dinámico
+
     <FormularioJSON :form_definition="f_config" :events="events" v-model="form_data"></FormularioJSON>
 
     {{ form_data }}
-  </div>
-  
 </template>
 
 <script setup>
@@ -206,9 +205,3 @@ const events = ref({
   _submit: async (e) => { console.log(e) }
 })
 </script>
-
-<style>
-.component-group{
-  background-color: #ddd;
-}
-</style>
