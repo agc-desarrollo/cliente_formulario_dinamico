@@ -1,6 +1,6 @@
 import FormularioJSON from './FormularioJSON.vue'
-import FormCol from './layout/FormCol.vue'
-import FormRow from './layout/FormRow.vue'
+import CompInsert from './layout/CompInsert.vue'
+import HTMLTag from './layout/HTMLTag.vue'
 
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
@@ -49,7 +49,7 @@ export const VueFormJSON = {
         Vue.component("VFJButtonInput", VFJButtonInput);
 
         Vue.component("FormularioJSON", FormularioJSON);
-        Vue.component("FormRow", FormRow);
-        Vue.component("FormCol", FormCol);
+        Vue.component("HTMLTag", HTMLTag);
+        Vue.component("CompInsert", CompInsert);
     }
 }

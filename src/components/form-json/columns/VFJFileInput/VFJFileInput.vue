@@ -10,9 +10,10 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'modelValue'])
+const emit  = defineEmits(['update:modelValue'])
 
 function input_event( evnt ){
-    props.data_channel.streaming('_user_input_data', { config: props.params, data: evnt })
+    emit('update:modelValue', { config: config.value, data: model.value })
 }
 </script>

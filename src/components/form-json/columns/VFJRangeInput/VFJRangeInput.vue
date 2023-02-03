@@ -10,18 +10,15 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'modelValue'])
+const emit  = defineEmits(['update:modelValue'])
 
 const model = ref(props.params.min)
 
 function input_event(){
-    props.data_channel.streaming('_user_input_data', { config: props.params, data: model.value })
+    emit('update:modelValue', { config: config.value, data: model.value })
 }
 
 onMounted(async ()=>{
-    props.data_channel.getData('field_value', async (data) => {
-        if (data != undefined)
-            model.value = data
-    }, props.params.field)
 })
 </script>

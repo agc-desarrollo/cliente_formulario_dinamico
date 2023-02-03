@@ -5,11 +5,13 @@
 <script setup>
 import { ref } from 'vue'
 import { VFJButtonInputConf } from './VFJButtonInputConf'
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'data_channel' , 'modelValue'])
+
+const emit = defineEmits(['update:modelValue', 'click_event'])
 
 const config = ref(new VFJButtonInputConf(props.params))
 
 function input_event(){
-    props.data_channel.streaming('_user_button_action', { config: props.params })
+    emit('click_event', { config: props.params, data: true })
 }
 </script>

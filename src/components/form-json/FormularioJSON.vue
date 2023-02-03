@@ -1,6 +1,7 @@
 <template>
     <component 
-        :is="COMPONENTS_REFS[ formConfig.sections.component ]" :data_channel="subs_data_channel" :params="formConfig.sections.section_def"></component>    
+        :is="COMPONENTS_REFS[ formConfig.sections.component ]" :data_channel="subs_data_channel" :params="formConfig.sections.section_def"
+        @click_event="click_event" v-model="prev_model" @update:modelValue="update_model"></component>    
 </template>
 
 <script setup>
@@ -11,13 +12,17 @@ import { COMPONENTS_REFS } from './components'
 
 import { FormConfig } from './FormConfig'
 import { FormStorage } from './FormStorage'
+import { FormService } from './services/FormService'
 
 const props = defineProps(['form_definition', 'modelValue'])
 
 const emit = defineEmits(['update:modelValue', 'submit', 'input'])
 
+const prev_model = ref()
+
 const formConfig = ref(new FormConfig())
 const formStorage   = ref(new FormStorage())
+const formService = ref(new FormService())
 
 const subs_data_channel = ref(new SubscriptionChannel())
 
@@ -29,6 +34,18 @@ const BTN_ACTION_INDEX = {
 
 async function submit_form(){
     emit('submit', formStorage.value.data_form)
+}
+
+function update_model( evnt ){
+    formStorage.value.update( evnt )
+    emit('update:modelValue', formStorage.value)
+}
+
+async function click_event( evnt ){
+    emit( 'click_event', evnt.data )
+
+    if (BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
+            await BTN_ACTION_INDEX[ evnt.config.action ]( evnt )
 }
 
 async function list_remove_data( event ){
@@ -69,17 +86,6 @@ async function list_add_new_data( event ){
 
 onMounted(async ()=>{
     formConfig.value = props.form_definition
-
-    subs_data_channel.value.subscribe('_user_input_data', 'modifi', async ( evnt ) => {
-        formStorage.value.update( evnt )
-        emit('input', evnt)
-        emit('update:modelValue', formStorage.value)
-    })
-
-    subs_data_channel.value.subscribe('_user_button_action', 'btns_0', async ( evnt ) => {
-        if (BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
-            await BTN_ACTION_INDEX[ evnt.config.action ]( evnt )
-    })
 
     subs_data_channel.value.setGetter('field_options', async ()=>{ return formConfig.value.general_data.field_options } )
     subs_data_channel.value.setGetter('initial_values', async ()=>{ return formConfig.value.general_data.initial_values } )

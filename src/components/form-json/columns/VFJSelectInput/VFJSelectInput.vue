@@ -12,14 +12,15 @@
 import { ref, onMounted } from 'vue'
 import { VFJSelectInputConf } from './VFJSelectInputConf'
 
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'data_channel', 'modelValue'])
+const emit  = defineEmits(['update:modelValue'])
 
 const model = ref()
 const config = ref(new VFJSelectInputConf(props.params))
 const field_options = ref([])
 
 function input_event(){
-    props.data_channel.streaming('_user_input_data', { config: config.value, data: model.value })
+    emit('update:modelValue', { config: config.value, data: model.value })
 }
 
 onMounted(async ()=>{

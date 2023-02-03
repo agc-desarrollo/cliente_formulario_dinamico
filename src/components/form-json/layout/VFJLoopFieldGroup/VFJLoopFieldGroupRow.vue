@@ -2,19 +2,31 @@
 
 <div class="row component-group">
     <div class="col">
-        <FormRow 
+        <HTMLTag 
             v-for="(row_data) in loop_data()"
-            :row_data="row_data" :data_channel="data_channel" :key="row_data" />
+            :row_data="row_data" :data_channel="data_channel" :key="row_data" 
+            v-model="prev_model" @update:modelValue="update_model" @click_event="click_event" />
     </div>
     <div class="col-auto">
-        <VFJButtonInput :data_channel="data_channel" :params="getCfg_remove_btn( reg_data )" />
+        <VFJButtonInput :data_channel="data_channel" :params="getCfg_remove_btn( reg_data )" @click_event="click_event" />
     </div>
 </div>
 
 </template>
 
 <script setup>
-const props = defineProps(['params', 'reg_data', 'data_channel'])
+import { ref } from 'vue'
+const prev_model = ref()
+const props = defineProps(['params', 'reg_data', 'data_channel', 'modelValue'])
+const emit = defineEmits(['update:modelValue', 'click_event'])
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt)
+}
+
+function click_event( evnt ){
+    emit('click_event', evnt)
+}
 
 function loop_data() {
     let params = props.params 

@@ -3,19 +3,34 @@
         <TabPanel 
             v-for="(section) in params" :key="section"
             :header="section.header">
-                <FormRow 
+                <HTMLTag 
                     v-for="(row_data) in section.html_def"
-                    :row_data="row_data" :data_channel="data_channel" :key="row_data"></FormRow>
+                    :row_data="row_data" :data_channel="data_channel" :key="row_data" v-model="prev_model" ç
+                    @update:modelValue="update_model"  @click_event="click_event"/>
         </TabPanel>
     </TabView>
-    
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'data_channel', 'modelValue'])
+
+const prev_model = ref()
+
+const emit = defineEmits(['update:modelValue', 'click_event'])
 const page  = ref(0)
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt)
+}
+
+function click_event( evnt ){
+    emit('click_event', evnt)
+
+    if (ACTION_INDEX[ evnt.config.action ] != undefined) 
+            ACTION_INDEX[ evnt.config.action ]( evnt )
+}
 
 function sig_page(){
     if ((page.value + 1) < props.params.length)
@@ -38,9 +53,5 @@ const ACTION_INDEX = {
 }
 
 onMounted(async ()=>{
-    props.data_channel.subscribe('_user_button_action', 'btns_1', async ( evnt ) => {
-        if (ACTION_INDEX[ evnt.config.action ] != undefined) 
-            ACTION_INDEX[ evnt.config.action ]( evnt )
-    })
 })
 </script>

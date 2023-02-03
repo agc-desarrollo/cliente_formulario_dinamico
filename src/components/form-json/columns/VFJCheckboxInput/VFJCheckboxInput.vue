@@ -14,24 +14,28 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { VFJCheckboxInputConf } from './VFJCheckboxInputConf'
 
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'data_channel', 'modelValue'])
+const emit  = defineEmits(['update:modelValue'])
+
+const config = ref(new VFJCheckboxInputConf(props.params))
 
 const model = ref()
 const field_options = ref([])
 
 function input_event(){
-    props.data_channel.streaming('_user_input_data', { config: props.params, data: model.value })
+    emit('update:modelValue', { config: config.value, data: model.value })
 }
 
 onMounted(async ()=>{
     props.data_channel.getData('field_options', async (data) => {
-        field_options.value = data[ props.params.field_options ]
+        field_options.value = data[ config.value.field_options ]
 
         props.data_channel.getData('field_value', async (data) => {
             if (data != undefined)
                 model.value = data
-        }, props.params.field)
+        }, config.value.field)
     })
 })
 </script>

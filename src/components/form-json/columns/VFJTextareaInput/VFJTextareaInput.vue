@@ -14,19 +14,17 @@
 import { VFJTextareaInputConf } from './VFJTextareaInputConf'
 import { ref, onMounted } from 'vue'
 
-const props = defineProps(['params', 'data_channel'])
+const emit = defineEmits(['update:modelValue'])
+
+const props = defineProps(['params', 'modelValue'])
 
 const config = ref(new VFJTextareaInputConf(props.params))
 const model = ref()
 
 function input_event(){
-    props.data_channel.streaming('_user_input_data', { config: config.value, data: model.value })
+    emit('update:modelValue', { config: config.value, data: model.value })
 }
 
 onMounted(async ()=>{
-    props.data_channel.getData('field_value', async (data) => {
-        if (data != undefined)
-            model.value = data
-    }, config.value.field)
 })
 </script>

@@ -1,12 +1,13 @@
 <template>
     <div class="row">
         <div class="col">
-            <VFJButtonInput :data_channel="data_channel" :params="getCfg_new_btn()" />
+            <VFJButtonInput :data_channel="data_channel"  @click_event="click_event" :params="getCfg_new_btn()" />
         </div>
     </div>
     
     <VFJLoopFieldGroupRow v-for="(reg_data) in list_data" :key="reg_data"
-        :data_channel="data_channel" :reg_data="reg_data" :params="conf" />
+        :data_channel="data_channel" :reg_data="reg_data" :params="conf" 
+            v-model="prev_model" @update:modelValue="update_model" @click_event="click_event"  />
     
 </template>
 
@@ -15,7 +16,20 @@ import { ref, onMounted } from 'vue'
 import { VFJLoopFieldGroupConf } from './VFJLoopFieldGroupConf'
 import VFJLoopFieldGroupRow from './VFJLoopFieldGroupRow.vue'
 
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params', 'data_channel', 'modelValue'])
+
+const prev_model = ref()
+
+const emit = defineEmits(['update:modelValue', 'click_event'])
+
+function update_model( evnt ){
+    console.log(88,evnt)
+    emit('update:modelValue', evnt)
+}
+
+function click_event( evnt ){
+    emit('click_event', evnt)
+}
 
 const conf = ref(new VFJLoopFieldGroupConf(props.params))
 const list_data = ref([])
