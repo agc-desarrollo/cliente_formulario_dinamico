@@ -1,7 +1,11 @@
-//Se usa para definir los parametros inciales de configuración del componente VFJColorInput
+//Se usa para definir los parametros inciales de configuración del componente VFJRangeInput
 import { VFJInputConfigBase } from '../VFJInputConfigBase'
-export class VFJColorInputConf extends VFJInputConfigBase{
-    inline = false
+
+export class VFJRangeInputConf extends VFJInputConfigBase{
+    step = 1
+    min  = 0
+    max  = 100
+    range = false
 
     constructor( params ){
         super (params)

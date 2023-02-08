@@ -5,27 +5,21 @@
             <Calendar :disabled="config.disabled" :inline="config.inline" :selectionMode="config.selectionMode"
                     :dateFormat="config.dateFormat" :showTime="config.showTime"
                     v-tooltip="config.tooltip"
-                    @year-change="input_event" @date-select="input_event" v-model="model" class="w-100" />
+                    @year-change="input_event" @date-select="input_event" @click="click_event"
+                    v-model="model" class="w-100" />
         </div>        
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { VFJDateInputConf } from './VFJDateInputConf'
+import { useInputCommon } from '../VFJInputComposable'
 
 const props = defineProps(['params', 'modelValue'])
-
-const emit = defineEmits(['update:modelValue'])
+const emit  = defineEmits(['update:modelValue', 'click'])
 
 const config = ref(new VFJDateInputConf(props.params))
-const model = ref()
 
-function input_event(){
-    emit('update:modelValue', { config: config.value, data: model.value })
-}
-
-onMounted(async ()=>{
-    
-})
+const { input_event, click_event, model } = useInputCommon( emit, config, props )
 </script>

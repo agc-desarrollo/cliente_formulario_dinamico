@@ -16,20 +16,20 @@ import VFJComponentGroup from './layout/VFJComponentGroup.vue'
 import VFJLoopFieldGroup from './layout/VFJLoopFieldGroup/VFJLoopFieldGroup.vue'
 
 export const COMPONENTS_REFS = {
-    'VFJButtonInput' : VFJButtonInput,
-    'VFJCheckboxInput' : VFJCheckboxInput,
-    'VFJColorInput' : VFJColorInput,
-    'VFJDateInput' : VFJDateInput,
-    'VFJFileInput' : VFJFileInput,
-    'VFJImage' : VFJImage,
-    'VFJRadioBtnInput' : VFJRadioBtnInput,
-    'VFJRangeInput' : VFJRangeInput,
-    'VFJSelectInput' : VFJSelectInput,
-    'VFJText' : VFJText,
-    'VFJTextareaInput' : VFJTextareaInput,
-    'VFJTextInput' : VFJTextInput,
+    'I_BUTTON' : VFJButtonInput,
+    'I_CHECKBOX' : VFJCheckboxInput,
+    'I_COLOR' : VFJColorInput,
+    'I_DATE' : VFJDateInput,
+    'I_FILE' : VFJFileInput,
+    '_IMAGE' : VFJImage,
+    'I_RADIO' : VFJRadioBtnInput,
+    'I_RANGE' : VFJRangeInput,
+    'I_SELECT' : VFJSelectInput,
+    '_TEXT' : VFJText,
+    'I_TEXTAREA' : VFJTextareaInput,
+    'I_TEXT' : VFJTextInput,
 
-    'VFJTabsSection' : VFJTabsSection,
-    'VFJComponentGroup' : VFJComponentGroup,
-    'VFJLoopFieldGroup' : VFJLoopFieldGroup
+    'V_TABS' : VFJTabsSection,
+    'V_GROUP' : VFJComponentGroup,
+    'V_LOOP' : VFJLoopFieldGroup
 }

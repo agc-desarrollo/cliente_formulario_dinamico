@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-const props = defineProps(['params', 'data_channel'])
+const props = defineProps(['params'])
 </script>

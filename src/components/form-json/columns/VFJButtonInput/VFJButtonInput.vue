@@ -5,13 +5,13 @@
 <script setup>
 import { ref } from 'vue'
 import { VFJButtonInputConf } from './VFJButtonInputConf'
-const props = defineProps(['params', 'data_channel' , 'modelValue'])
+const props = defineProps(['params', 'modelValue'])
 
-const emit = defineEmits(['update:modelValue', 'click_event'])
+const emit = defineEmits(['update:modelValue', 'click'])
 
 const config = ref(new VFJButtonInputConf(props.params))
 
 function input_event(){
-    emit('click_event', { config: props.params, data: true })
+    emit('click', { config: props.params, data: true })
 }
 </script>

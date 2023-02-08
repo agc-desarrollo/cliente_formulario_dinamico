@@ -1,16 +1,11 @@
 //Se usa para definir los parametros inciales de configuración del componente VFJTextInputConf
-export class VFJTextInputConf{
-    label = ''
-    class = ''
-    disabled = false
-    field = ''
-    dfield = ''
-    required = false
+import { VFJInputConfigBase } from '../VFJInputConfigBase'
+
+export class VFJTextInputConf extends VFJInputConfigBase {
     type = 'text'
-    autocomplete_options = ''
-    tooltip = ''
 
     constructor( params ){
+        super (params)
         let keys = Object.keys(params)
         for (let c=0; c < keys.length; c++)
             if (this[keys[c]] !== undefined)

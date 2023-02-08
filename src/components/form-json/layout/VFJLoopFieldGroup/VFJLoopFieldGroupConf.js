@@ -2,7 +2,7 @@
 export class VFJLoopFieldGroupConf {
     
     runtime_data_field = ''
-    html_def = ''
+    content = ''
     btn_create = { label: 'Agregar', icon: 'pi pi-plus', iconPos: 'left' }
     btn_delete = { label: '', icon: 'pi pi-times', class: 'p-button-raised p-button-rounded p-button-danger' }
     initial_values_id = ''

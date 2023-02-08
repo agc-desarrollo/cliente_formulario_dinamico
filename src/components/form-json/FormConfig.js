@@ -4,14 +4,14 @@ export const STATUS = {
 }
 
 export class FormConfigHTMLDef {
-    css_class = ''
+    class = ''
     content   = [] //FormConfigComponent
 }
 
 export class FormConfigComponent {
     component = ''
     params    = {}
-    css_class = ''
+    class = ''
 }
 
 export class FormConfigGeneralData{
