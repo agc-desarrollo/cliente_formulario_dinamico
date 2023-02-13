@@ -1,12 +1,14 @@
 <template>
 
-<div class="row component-group">
+<div class="row">
     <div class="col">
-        <HTMLTag 
-            v-for="(row_data) in loop_data()"
-            :row_data="row_data" :key="row_data" 
-            v-model="model" @update:modelValue="update_model" 
-            @click="click" />
+        <div class="row component-group">
+            <HTMLTag 
+                v-for="(row_data) in loop_data()"
+                :row_data="row_data" :key="row_data" 
+                v-model="model" @update:modelValue="update_model" 
+                @click="click" />
+        </div>
     </div>
     <div class="col-auto">
         <VFJButtonInput :params="_remove_btn_cfg" @click="click_delete" />

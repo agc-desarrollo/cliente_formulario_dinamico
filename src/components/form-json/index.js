@@ -14,6 +14,7 @@ import ColorPicker from 'primevue/colorpicker'
 import Slider from 'primevue/slider'
 import FileUpload from 'primevue/fileupload'
 import Tooltip from 'primevue/tooltip';
+import InputNumber from 'primevue/inputnumber';
 
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
@@ -41,7 +42,8 @@ export const VueFormJSON = {
         Vue.component("ColorPicker", ColorPicker);
         Vue.component("Slider", Slider);
         Vue.component("FileUpload", FileUpload);
-
+        Vue.component("InputNumber", InputNumber);
+        
         Vue.component("TabView", TabView)
         Vue.component("TabPanel", TabPanel)
 

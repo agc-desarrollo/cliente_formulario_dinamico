@@ -1,7 +1,8 @@
 import { ref, onMounted } from 'vue'
 
-export function useInputCommon( emit, config, props, optionals={} ) {
+export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const model  = ref()
+    const config = ref(new CONFIG_CLASS(props.params))
     
     function input_event(){
         emit('update:modelValue', { config: config.value, data: model.value })
@@ -25,5 +26,5 @@ export function useInputCommon( emit, config, props, optionals={} ) {
         }
     })
 
-    return { input_event, click_event, model }
+    return { input_event, click_event, model, config }
 }

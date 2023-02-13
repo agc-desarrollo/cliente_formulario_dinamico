@@ -3,11 +3,12 @@
         <TabPanel 
             v-for="(section) in params" :key="section"
             :header="section.header">
-                <HTMLTag 
-                    v-for="(row_data) in section.content"
-                    :row_data="row_data" :key="row_data" 
-                    v-model="model" @update:modelValue="update_model"
-                    @click="click"/>
+                <div v-for="(row_data) in section.content" :class="row_data.class">
+                    <HTMLTag 
+                        :row_data="row_data" :key="row_data" 
+                        v-model="model" @update:modelValue="update_model"
+                        @click="click"/>
+                </div>
         </TabPanel>
     </TabView>
 </template>

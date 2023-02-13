@@ -10,6 +10,7 @@ import VFJSelectInput   from './columns/VFJSelectInput/VFJSelectInput.vue'
 import VFJText          from './columns/VFJText/VFJText.vue'
 import VFJTextareaInput from './columns/VFJTextareaInput/VFJTextareaInput.vue'
 import VFJTextInput     from './columns/VFJTextInput/VFJTextInput.vue'
+import VFJNumber        from './columns/VFJNumber/VFJNumber.vue'
 
 import VFJTabsSection    from './layout/VFJTabsSection.vue'
 import VFJComponentGroup from './layout/VFJComponentGroup.vue'
@@ -28,6 +29,7 @@ export const COMPONENTS_REFS = {
     '_TEXT' : VFJText,
     'I_TEXTAREA' : VFJTextareaInput,
     'I_TEXT' : VFJTextInput,
+    'I_NUMBER' : VFJNumber,
 
     'V_TABS' : VFJTabsSection,
     'V_GROUP' : VFJComponentGroup,

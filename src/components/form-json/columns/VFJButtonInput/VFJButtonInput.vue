@@ -1,17 +1,14 @@
 <template>
-    <Button :label="config.label" :class="config.class" :icon="config.icon" :iconPos="config.iconPos" v-tooltip="config.tooltip" @click="input_event($event)"/>
+    <Button :label="config.label" :class="config.class" :icon="config.icon" :iconPos="config.iconPos" v-tooltip="config.tooltip" @click="click_event"/>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useInputCommon } from '../VFJInputComposable'
 import { VFJButtonInputConf } from './VFJButtonInputConf'
-const props = defineProps(['params', 'modelValue'])
 
+const props = defineProps(['params', 'modelValue'])
 const emit = defineEmits(['update:modelValue', 'click'])
 
-const config = ref(new VFJButtonInputConf(props.params))
+const { click_event, model, config } = useInputCommon( emit, VFJButtonInputConf, props )
 
-function input_event(){
-    emit('click', { config: props.params, data: true })
-}
 </script>

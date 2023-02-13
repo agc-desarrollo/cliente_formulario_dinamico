@@ -1,6 +1,6 @@
 export class VFJInputConfigBase {
     label = ''
-    class = ''
+    class = 'col mb-3'
     disabled = false
     field = ''
     dfield = ''
@@ -9,6 +9,7 @@ export class VFJInputConfigBase {
     tooltip = ''
     list = null
     id = 0
+    placeholder = ''
 
     constructor( params ){
         let keys = Object.keys(params)

@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-3">
+    <div :class="params.class">
         <label :for="params.field" class="form-label">{{ params.label }}</label>
         <div class="input-group">
             <FileUpload name="demo[]" :customUpload="true" @uploader="input_event"  />

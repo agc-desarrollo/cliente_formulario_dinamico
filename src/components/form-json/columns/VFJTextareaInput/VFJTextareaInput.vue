@@ -1,9 +1,9 @@
 <template>
-    <div class="mb-3">
+    <div :class="config.class">
         <label :for="config.key" class="form-label">{{ config.label }}</label>
         <div class="input-group">
             <Textarea 
-                class="w-100"    v-tooltip="config.tooltip"
+                class="w-100"    v-tooltip="config.tooltip" :placeholder="config.placeholder"
                 v-model="model" :rows="config.rows" :cols="config.cols" :disabled="config.disabled" 
                 @click="click_event" @input="input_event"  />
         </div>        
@@ -13,13 +13,10 @@
 
 <script setup>
 import { VFJTextareaInputConf } from './VFJTextareaInputConf'
-import { ref } from 'vue'
 import { useInputCommon } from '../VFJInputComposable'
 
-const emit  = defineEmits(['update:modelValue'])
-const props = defineProps(['params', 'modelValue', 'click'])
+const emit  = defineEmits(['update:modelValue', 'click'])
+const props = defineProps(['params', 'modelValue'])
 
-const config = ref(new VFJTextareaInputConf(props.params))
-
-const { input_event, click_event, model } = useInputCommon( emit, config, props )
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJTextareaInputConf, props )
 </script>

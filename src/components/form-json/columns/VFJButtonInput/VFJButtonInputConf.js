@@ -1,9 +1,10 @@
 //Se usa para definir los parametros inciales de configuración del componente VFJButtonInput
 import { VFJInputConfigBase } from '../VFJInputConfigBase'
 export class VFJButtonInputConf extends VFJInputConfigBase {
-    icon  = ''
-    iconPos = ''
-
+    icon  = ''; iconPos = ''
+    data = true
+    action = ''
+    
     constructor( params ){
         super (params)
         let keys = Object.keys(params)

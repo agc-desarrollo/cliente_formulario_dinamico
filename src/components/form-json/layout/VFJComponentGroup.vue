@@ -1,6 +1,6 @@
 <template>
-    <div class="row component-group">
-        <div class="col">
+    <div class="component-group">
+        <div class="row">
             <HTMLTag 
                 v-for="(row_data) in params.content"
                 :row_data="row_data" :key="row_data" 
@@ -12,9 +12,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-const props = defineProps(['params', 'modelValue'])
 
-const emit = defineEmits(['update:modelValue', 'click'])
+const props = defineProps(['params', 'modelValue'])
+const emit  = defineEmits(['update:modelValue', 'click'])
 
 const model = ref( props.modelValue )
 

@@ -1,20 +1,15 @@
 <template>
-    <div :class="row_data.class">
-        <div class="col" >
-            <component  v-for="(col_data) in row_data.content" :key="col_data"
-                        :is="COMPONENTS_REFS[ col_data.component ]" :class="col_data.class" :params="col_data.params"
-                        @update:modelValue="update_model" v-model="model" 
-                        @click="click"/>
-        </div>
-    </div>
+    <component  v-for="(col_data) in row_data.content" :key="col_data"
+            :is="COMPONENTS_REFS[ col_data.component ]" :class="col_data.class" :params="col_data.params"
+            @update:modelValue="update_model" v-model="model" 
+            @click="click"/>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { COMPONENTS_REFS } from '../components'
 
-const emit = defineEmits(['update:modelValue', 'click'])
-
+const emit  = defineEmits(['update:modelValue', 'click'])
 const props = defineProps(['row_data', 'modelValue'])
 
 const model = ref( props.modelValue )

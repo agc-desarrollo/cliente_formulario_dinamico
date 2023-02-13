@@ -1,10 +1,9 @@
 <template>
-    <div class="mb-3">
+    <div :class="config.class">
         <label :for="config.key" class="form-label">{{ config.label }}</label>
         <div class="input-group">
             <InputText 
-                v-tooltip="config.tooltip"
-                :disabled="config.disabled" 
+                v-tooltip="config.tooltip" :disabled="config.disabled"
                 @input="input_event" @click="click_event"
                 :type="config.type"  v-model="model" class="w-100" />
         </div>        
@@ -12,14 +11,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { VFJTextInputConf } from './VFJTextInputConf'
 import { useInputCommon } from '../VFJInputComposable'
 
-const emit  = defineEmits(['update:modelValue'])
-const props = defineProps(['params', 'modelValue', 'click'])
+const emit  = defineEmits(['update:modelValue', 'click'])
+const props = defineProps(['params', 'modelValue'])
 
-const config = ref(new VFJTextInputConf(props.params))
-
-const { input_event, click_event, model } = useInputCommon( emit, config, props )
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJTextInputConf, props )
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" :class="class">
         <div class="col">
             <VFJButtonInput   @click="click_add" :params="cfg_new_btn" />
         </div>
@@ -18,7 +18,7 @@ import { VFJLoopFieldGroupConf } from './VFJLoopFieldGroupConf'
 import VFJLoopFieldGroupRow from './VFJLoopFieldGroupRow.vue'
 import { FormStorage } from '../../FormStorage'
 
-const props = defineProps(['params', 'modelValue'])
+const props = defineProps(['params', 'modelValue', 'class'])
 
 const model      = ref( props.modelValue )
 const model_rows = ref(new FormStorage())
@@ -38,7 +38,6 @@ function update_model( evnt ){
 
 function click_event( evnt ){
     emit('click', evnt)
-    console.log(46543,evnt)
 }
 
 function click_add( evnt ){
@@ -52,7 +51,7 @@ function click_remove(evnt){
         if (list_data.value[i]._i == evnt.id){
             model_aux.value.delete(evnt)
             list_data.value.splice(i,1)
-            return true
+            break;
         }
     }
     sync_upd( evnt )    
