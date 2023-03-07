@@ -24,7 +24,7 @@ export class FormConfigGeneralData{
 
 export class FormConfigSections {
     component = 'VFJTabsSection'
-    section_def = []
+    content = []
 }
 
 export class FormConfig {
