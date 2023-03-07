@@ -1,7 +1,7 @@
 <template>
     <component 
         :is="COMPONENTS_REFS[ formConfig.sections.component ]" 
-        :params="formConfig.sections.section_def"
+        :params="formConfig.sections.content"
         @click="click" v-model="model" @update:modelValue="update_model"></component>    
 </template>
 
