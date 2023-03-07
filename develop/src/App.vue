@@ -1,19 +1,34 @@
 <template>
-  <div class="container"> {{ conf }}
-    <ClienteFormularioDinamico v-model="model" :config="conf" />
+  <div class="container">
+    <ClienteFormularioDinamico 
+        v-if ="conf !== null"
+        v-model="model" :config="conf" />
   </div>
   
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
-const model = ref({  'name': 'Juan Perez', 'categoria': 4, 'radio_ej': 2, 'checkbox_ej': [1,4] })
-const conf  = ref({
-    api: process.env.VUE_APP_API_URL
-})
+const route  = useRoute()
+
+const model   = ref({  'name': 'Juan Perez', 'categoria': 4, 'radio_ej': 2, 'checkbox_ej': [1,4] })
+const conf    = ref( null )
 
 onMounted(async ()=>{
+  let form_id = route.query.f
+  
+  if (form_id == undefined){
+    
+    alert('Formulario no especificado')
+    return false
+  }
+
+  conf.value = {
+    api: process.env.VUE_APP_API_URL,
+    id:  form_id
+  }
 })
 </script>
 

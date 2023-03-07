@@ -28,7 +28,7 @@ function clickRepeat( event ){ emit('click' ,event) }
 
 
 async function callGetForm(){
-  let res = await getForm(props.config?.api, 1)
+  let res = await getForm(props.config.api, props.config.id)
   if (res.stat) {
     form_def.value = res.definition
   } else {
@@ -37,7 +37,7 @@ async function callGetForm(){
 }
 
 onMounted(async ()=>{
-  let res = await getSession(props.config?.api)
+  let res = await getSession(props.config.api)
 
   if (res.stat) {
     await callGetForm()
