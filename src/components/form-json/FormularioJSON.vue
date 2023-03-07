@@ -45,7 +45,7 @@ async function click( evnt ){
 onMounted(async ()=>{
     formConfig.value = props.form_definition
     model.value.data_form      = props.modelValue ? props.modelValue : {} 
-    model.value.field_options  = formConfig.value.general_data.field_options
-    model.value.initial_values = formConfig.value.general_data.initial_values
+    model.value.field_options  = formConfig.value.gral.field_options
+    model.value.initial_values = formConfig.value.gral.initial_values
 })
 </script>

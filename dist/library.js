@@ -1,1 +1,1606 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("vue"),o=require("axios"),l=require("primevue/inputtext"),t=require("primevue/dropdown"),n=require("primevue/textarea"),a=require("primevue/config"),r=require("primevue/radiobutton"),i=require("primevue/checkbox"),u=require("primevue/calendar"),s=require("primevue/button"),c=require("primevue/image"),m=require("primevue/colorpicker"),d=require("primevue/slider"),p=require("primevue/fileupload"),f=require("primevue/tooltip"),v=require("primevue/inputnumber"),_=require("primevue/tabview"),V=require("primevue/tabpanel");function k(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}require("primevue/resources/themes/nova/theme.css"),require("primevue/resources/primevue.min.css"),require("primeicons/primeicons.css");var g=k(o),b=k(l),h=k(t),C=k(n),B=k(a),F=k(r),y=k(i),I=k(u),E=k(s),x=k(c),w=k(m),N=k(d),J=k(p),D=k(f),T=k(v),j=k(_),S=k(V);const L=function(e){const o=g.default.create({baseURL:e,withCredentials:!0,timeout:1e5});return o.interceptors.request.use((e=>e),(e=>(console.log("request err",e),Promise.reject(e)))),o.interceptors.response.use((e=>e.data),(e=>(console.log("err"+e),{stat:!1,error:e}))),o};var R={__name:"ClienteFormularioDinamico",props:["config","modelValue"],emits:["update:modelValue","input","submit","click"],setup(o,{emit:l}){const t=o,n=e.ref(t.modelValue),a=e.ref(null);function r(e){l("update:modelValue",e)}function i(e){l("input",e)}function u(e){l("submit",e)}function s(e){l("click",e)}async function c(){let e=await(o=t.config.api,l=t.config.id,L(o)({url:"/form/get_form?id="+l,method:"get",data:""}));var o,l;e.stat?a.value=e.definition:alert(e.text)}return e.ref(null),e.onMounted((async()=>{let e=await(o=t.config.api,L(o)({url:"/form/get_session",method:"post",data:l}));var o,l;e.stat?await c():alert(e.text)})),(o,l)=>{const t=e.resolveComponent("FormularioJSON");return e.openBlock(),e.createElementBlock(e.Fragment,null,[e.createTextVNode(" Cliente Formulario Dinámico "),null!==a.value?(e.openBlock(),e.createBlock(t,{key:0,form_definition:a.value,modelValue:n.value,"onUpdate:modelValue":[l[0]||(l[0]=e=>n.value=e),r],onSubmit:u,onInput:i,onClick:s},null,8,["form_definition","modelValue"])):e.createCommentVNode("v-if",!0),e.createTextVNode(" "+e.toDisplayString(n.value),1)],64)}}};function O(o,l,t,n={}){const a=e.ref(),r=e.ref(new l(t.params));return e.onMounted((async()=>{if(null!=t.modelValue&&null!=r.value.field_options){let e=t.modelValue.field_options;n.field_options.value=e[r.value.field_options]}if(void 0!==t.modelValue&&void 0!==t.modelValue.getValue){let e=t.modelValue.getValue(r.value.field);null!=e&&(a.value=e)}else console.log(45645,t.modelValue)})),{input_event:function(){o("update:modelValue",{config:r.value,data:a.value})},click_event:function(e){o("click",{config:r.value,data:a.value,evnt:e})},model:a,config:r}}R.__file="src/ClienteFormularioDinamico.vue";class U{label="";class="col mb-3";disabled=!1;field="";dfield="";required=!1;autocomplete_options="";tooltip="";list=null;id=0;placeholder="";constructor(e){let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}class q extends U{icon="";iconPos="";data=!0;action="";constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}var M={__name:"VFJButtonInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{click_event:n,model:a,config:r}=O(l,q,t);return(o,l)=>{const t=e.resolveComponent("Button"),a=e.resolveDirective("tooltip");return e.withDirectives((e.openBlock(),e.createBlock(t,{label:e.unref(r).label,class:e.normalizeClass(e.unref(r).class),icon:e.unref(r).icon,iconPos:e.unref(r).iconPos,onClick:e.unref(n)},null,8,["label","class","icon","iconPos","onClick"])),[[a,e.unref(r).tooltip]])}},__file:"src/components/form-json/columns/VFJButtonInput/VFJButtonInput.vue"};class z extends U{option_id="";option_label="";field_options="";constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const P=["for"],G={class:"input-group row"},A={for:"{{ config.field + option[config.option_id] }}"};var H={__name:"VFJCheckboxInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref([]),{input_event:a,click_event:r,model:i,config:u}=O(l,z,t,{field_options:n});return(o,l)=>{const t=e.resolveComponent("Checkbox");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(u).class)},[e.createElementVNode("label",{for:e.unref(u).field,class:"form-label"},e.toDisplayString(e.unref(u).label),9,P),e.createElementVNode("div",G,[(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(n.value,(o=>(e.openBlock(),e.createElementBlock("div",{class:"field-radiobutton col-12",key:o},[e.createVNode(t,{inputId:"{{config.field + option[config.option_id]}}",name:e.unref(u).field,onChange:e.unref(a),onClick:e.unref(r),value:o[e.unref(u).option_id],modelValue:e.unref(i),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(i)?i.value=o:null)},null,8,["name","onChange","onClick","value","modelValue"]),e.createElementVNode("label",A,e.toDisplayString(o[e.unref(u).option_label]),1)])))),128))])],2)}},__file:"src/components/form-json/columns/VFJCheckboxInput/VFJCheckboxInput.vue"};class X extends U{inline=!1;constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const Y=["for"],K={class:"input-group"};var Q={__name:"VFJColorInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{input_event:n,click_event:a,model:r,config:i}=O(l,X,t);return(o,l)=>{const t=e.resolveComponent("ColorPicker"),u=e.resolveDirective("tooltip");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(i).class)},[e.createElementVNode("label",{for:e.unref(i).field,class:"form-label"},e.toDisplayString(e.unref(i).label),9,Y),e.createElementVNode("div",K,[e.withDirectives(e.createVNode(t,{modelValue:e.unref(r),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(r)?r.value=o:null),inline:e.unref(i).inline,onChange:e.unref(n),onClick:e.unref(a)},null,8,["modelValue","inline","onChange","onClick"]),[[u,e.unref(i).tooltip]])])],2)}},__file:"src/components/form-json/columns/VFJColorInput/VFJColorInput.vue"};class W extends U{inline=!1;selectionMode="single";dateFormat="dd.mm.yy";showTime=!1;value=null;constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const Z=["for"],$={class:"input-group"};var ee={__name:"VFJDateInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{input_event:n,click_event:a,model:r,config:i}=O(l,W,t);return(o,l)=>{const t=e.resolveComponent("Calendar"),u=e.resolveDirective("tooltip");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(i).class)},[e.createElementVNode("label",{for:e.unref(i).field,class:"form-label"},e.toDisplayString(e.unref(i).label),9,Z),e.createElementVNode("div",$,[e.withDirectives(e.createVNode(t,{disabled:e.unref(i).disabled,inline:e.unref(i).inline,selectionMode:e.unref(i).selectionMode,dateFormat:e.unref(i).dateFormat,showTime:e.unref(i).showTime,placeholder:e.unref(i).placeholder,onYearChange:e.unref(n),onDateSelect:e.unref(n),onClick:e.unref(a),modelValue:e.unref(r),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(r)?r.value=o:null),class:"w-100"},null,8,["disabled","inline","selectionMode","dateFormat","showTime","placeholder","onYearChange","onDateSelect","onClick","modelValue"]),[[u,e.unref(i).tooltip]])])],2)}},__file:"src/components/form-json/columns/VFJDateInput/VFJDateInput.vue"};const oe=["for"],le={class:"input-group"};var te={__name:"VFJFileInput",props:["params","modelValue"],emits:["update:modelValue"],setup(o,{emit:l}){function t(e){l("update:modelValue",{config:config.value,data:model.value})}return(l,n)=>{const a=e.resolveComponent("FileUpload");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(o.params.class)},[e.createElementVNode("label",{for:o.params.field,class:"form-label"},e.toDisplayString(o.params.label),9,oe),e.createElementVNode("div",le,[e.createVNode(a,{name:"demo[]",customUpload:!0,onUploader:t})])],2)}},__file:"src/components/form-json/columns/VFJFileInput/VFJFileInput.vue"},ne={__name:"VFJImage",props:["params"],setup:o=>(l,t)=>{const n=e.resolveComponent("Image");return e.openBlock(),e.createBlock(n,{src:o.params.src,alt:o.params.alt},null,8,["src","alt"])},__file:"src/components/form-json/columns/VFJImage/VFJImage.vue"};class ae extends U{option_id="";option_label="";field_options="";constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const re=["for"],ie={class:"input-group row"},ue={for:"{{ config.field + option[config.option_id] }}"};var se={__name:"VFJRadioBtnInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref([]),{input_event:a,click_event:r,model:i,config:u}=O(l,ae,t,{field_options:n});return(o,l)=>{const t=e.resolveComponent("RadioButton");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(u).class)},[e.createElementVNode("label",{for:e.unref(u).field,class:"form-label"},e.toDisplayString(e.unref(u).label),9,re),e.createElementVNode("div",ie,[(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(n.value,(o=>(e.openBlock(),e.createElementBlock("div",{class:"field-radiobutton col-12",key:o},[e.createVNode(t,{inputId:"{{config.field + option[config.option_id]}}",name:e.unref(u).field,onChange:e.unref(a),onClick:e.unref(r),value:o[e.unref(u).option_id],modelValue:e.unref(i),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(i)?i.value=o:null)},null,8,["name","onChange","onClick","value","modelValue"]),e.createElementVNode("label",ue,e.toDisplayString(o[e.unref(u).option_label]),1)])))),128))])],2)}},__file:"src/components/form-json/columns/VFJRadioBtnInput/VFJRadioBtnInput.vue"};class ce extends U{step=1;min=0;max=100;range=!1;constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const me=["for"],de={class:"input-group"};var pe={__name:"VFJRangeInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{input_event:n,click_event:a,model:r,config:i}=O(l,ce,t);return(l,t)=>{const u=e.resolveComponent("Slider");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(i).class)},[e.createElementVNode("label",{for:o.params.field,class:"form-label"},e.toDisplayString(o.params.label),9,me),e.createElementVNode("div",de,[e.createVNode(u,{modelValue:e.unref(r),"onUpdate:modelValue":t[0]||(t[0]=o=>e.isRef(r)?r.value=o:null),range:e.unref(i).range,onSlideend:e.unref(n),step:e.unref(i).step,min:e.unref(i).min,max:e.unref(i).max,class:"w-100",onClick:e.unref(a)},null,8,["modelValue","range","onSlideend","step","min","max","onClick"])])],2)}},__file:"src/components/form-json/columns/VFJRangeInput/VFJRangeInput.vue"};class fe extends U{option_id="";option_label="";field_options="";constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const ve=["for"],_e={class:"input-group"};var Ve={__name:"VFJSelectInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref(),{input_event:a,click_event:r,model:i,config:u}=O(l,fe,t,{field_options:n});return(o,l)=>{const t=e.resolveComponent("Dropdown"),s=e.resolveDirective("tooltip");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(u).class)},[e.createElementVNode("label",{for:e.unref(u).key,class:"form-label"},e.toDisplayString(e.unref(u).label),9,ve),e.withDirectives((e.openBlock(),e.createElementBlock("div",_e,[e.createVNode(t,{modelValue:e.unref(i),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(i)?i.value=o:null),class:"w-100",options:n.value,optionLabel:e.unref(u).option_label,optionValue:e.unref(u).option_id,onChange:e.unref(a),onClick:e.unref(r)},null,8,["modelValue","options","optionLabel","optionValue","onChange","onClick"])])),[[s,e.unref(u).tooltip]])],2)}},__file:"src/components/form-json/columns/VFJSelectInput/VFJSelectInput.vue"};const ke=["innerHTML","styles"];var ge={__name:"VFJText",props:["params"],setup:o=>(l,t)=>(e.openBlock(),e.createElementBlock("div",{innerHTML:o.params.html,styles:o.params.styles},null,8,ke)),__file:"src/components/form-json/columns/VFJText/VFJText.vue"};class be extends U{rows=5;cols=30;constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const he=["for"],Ce={class:"input-group"};var Be={__name:"VFJTextareaInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{input_event:n,click_event:a,model:r,config:i}=O(l,be,t);return(o,l)=>{const t=e.resolveComponent("Textarea"),u=e.resolveDirective("tooltip");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(i).class)},[e.createElementVNode("label",{for:e.unref(i).key,class:"form-label"},e.toDisplayString(e.unref(i).label),9,he),e.createElementVNode("div",Ce,[e.withDirectives(e.createVNode(t,{class:"w-100",placeholder:e.unref(i).placeholder,modelValue:e.unref(r),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(r)?r.value=o:null),rows:e.unref(i).rows,cols:e.unref(i).cols,disabled:e.unref(i).disabled,onClick:e.unref(a),onInput:e.unref(n)},null,8,["placeholder","modelValue","rows","cols","disabled","onClick","onInput"]),[[u,e.unref(i).tooltip]])])],2)}},__file:"src/components/form-json/columns/VFJTextareaInput/VFJTextareaInput.vue"};class Fe extends U{type="text";constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const ye=["for"],Ie={class:"input-group"};var Ee={__name:"VFJTextInput",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{input_event:n,click_event:a,model:r,config:i}=O(l,Fe,t);return(o,l)=>{const t=e.resolveComponent("InputText"),u=e.resolveDirective("tooltip");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(i).class)},[e.createElementVNode("label",{for:e.unref(i).key,class:"form-label"},e.toDisplayString(e.unref(i).label),9,ye),e.createElementVNode("div",Ie,[e.withDirectives(e.createVNode(t,{disabled:e.unref(i).disabled,onInput:e.unref(n),onClick:e.unref(a),type:e.unref(i).type,modelValue:e.unref(r),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(r)?r.value=o:null),class:"w-100"},null,8,["disabled","onInput","onClick","type","modelValue"]),[[u,e.unref(i).tooltip]])])],2)}},__file:"src/components/form-json/columns/VFJTextInput/VFJTextInput.vue"};class xe extends U{min=null;max=null;mode="decimal";minFractionDigits=null;maxFractionDigits=null;locale="es-AR";currency="USD";suffix="";prefix="";step=1;format=!0;showButtons=!0;constructor(e){super(e);let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const we=["for"],Ne={class:"input-group"};var Je={__name:"VFJNumber",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,{input_event:n,click_event:a,model:r,config:i}=O(l,xe,t);return(o,l)=>{const t=e.resolveComponent("InputNumber"),u=e.resolveDirective("tooltip");return e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(e.unref(i).class)},[e.createElementVNode("label",{for:e.unref(i).key,class:"form-label"},e.toDisplayString(e.unref(i).label),9,we),e.createElementVNode("div",Ne,[e.withDirectives(e.createVNode(t,{disabled:e.unref(i).disabled,min:e.unref(i).min,max:e.unref(i).max,step:e.unref(i).step,format:e.unref(i).format,minFractionDigits:e.unref(i).minFractionDigits,maxFractionDigits:e.unref(i).maxFractionDigits,currency:e.unref(i).currency,mode:e.unref(i).mode,suffix:e.unref(i).suffix,prefix:e.unref(i).prefix,showButtons:e.unref(i).showButtons,placeholder:e.unref(i).placeholder,onInput:e.unref(n),onClick:e.unref(a),type:e.unref(i).type,modelValue:e.unref(r),"onUpdate:modelValue":l[0]||(l[0]=o=>e.isRef(r)?r.value=o:null),class:"w-100"},null,8,["disabled","min","max","step","format","minFractionDigits","maxFractionDigits","currency","mode","suffix","prefix","showButtons","placeholder","onInput","onClick","type","modelValue"]),[[u,e.unref(i).tooltip]])])],2)}},__file:"src/components/form-json/columns/VFJNumber/VFJNumber.vue"},De={__name:"VFJTabsSection",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref(t.modelValue),a=e.ref(0);function r(e){l("update:modelValue",e)}function i(e){l("click",e),null!=e.config?.action&&null!=u[e.config.action]&&u[e.config.action](e)}const u={section_next:function(){a.value+1<t.params.length&&a.value++},section_back:function(){a.value-1>=0&&a.value--},section_goTo:function(e){a.value=e.config.action_params.id}};return e.onMounted((async()=>{})),(l,t)=>{const u=e.resolveComponent("HTMLTag"),s=e.resolveComponent("TabPanel"),c=e.resolveComponent("TabView");return e.openBlock(),e.createBlock(c,{activeIndex:a.value},{default:e.withCtx((()=>[(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(o.params,(o=>(e.openBlock(),e.createBlock(s,{key:o,header:o.header},{default:e.withCtx((()=>[(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(o.content,(o=>(e.openBlock(),e.createElementBlock("div",{class:e.normalizeClass(o.class)},[(e.openBlock(),e.createBlock(u,{row_data:o,key:o,modelValue:n.value,"onUpdate:modelValue":[t[0]||(t[0]=e=>n.value=e),r],onClick:i},null,8,["row_data","modelValue"]))],2)))),256))])),_:2},1032,["header"])))),128))])),_:1},8,["activeIndex"])}},__file:"src/components/form-json/layout/VFJTabsSection.vue"};const Te={class:"component-group"},je={class:"row"};var Se={__name:"VFJComponentGroup",props:["params","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref(t.modelValue);function a(e){l("update:modelValue",e)}function r(e){l("click",e)}return e.onMounted((async()=>{})),(l,t)=>{const i=e.resolveComponent("HTMLTag");return e.openBlock(),e.createElementBlock("div",Te,[e.createElementVNode("div",je,[(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(o.params.content,(o=>(e.openBlock(),e.createBlock(i,{row_data:o,key:o,modelValue:n.value,"onUpdate:modelValue":[t[0]||(t[0]=e=>n.value=e),a],onClick:r},null,8,["row_data","modelValue"])))),128))])])}},__file:"src/components/form-json/layout/VFJComponentGroup.vue"};class Le{runtime_data_field="";content="";btn_create={label:"Agregar",icon:"pi pi-plus",iconPos:"left"};btn_delete={label:"",icon:"pi pi-times",class:"p-button-raised p-button-rounded p-button-danger"};initial_values_id="";constructor(e){let o=Object.keys(e);for(let l=0;l<o.length;l++)void 0!==this[o[l]]&&(this[o[l]]=e[o[l]])}}const Re={class:"row"},Oe={class:"col"},Ue={class:"row component-group"},qe={class:"col-auto"};var Me={__name:"VFJLoopFieldGroupRow",props:["params","reg_data","modelValue"],emits:["update:modelValue","click","remove"],setup(o,{emit:l}){const t=o,n=e.ref(t.modelValue),a=e.ref(t.params.btn_delete);function r(e){l("update:modelValue",e)}function i(e){l("click",e)}function u(){let e=t.params,o=e.runtime_data_field,l=e.content;for(let a=0;a<l.length;a++)for(let r=0;r<l[a].content.length;r++){let i=l[a].content[r].params;null!=i.dfield&&(i.field=i.dfield,i.list=o,i.id=t.reg_data._i,n.value[e.initial_values_id]&&(i.value=n.value[e.initial_values_id][i.dfield]))}return l}function s(e){l("remove",{id:t.reg_data._i,list:t.params.runtime_data_field})}return(o,l)=>{const t=e.resolveComponent("HTMLTag"),c=e.resolveComponent("VFJButtonInput");return e.openBlock(),e.createElementBlock("div",Re,[e.createElementVNode("div",Oe,[e.createElementVNode("div",Ue,[(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(u(),(o=>(e.openBlock(),e.createBlock(t,{row_data:o,key:o,modelValue:n.value,"onUpdate:modelValue":[l[0]||(l[0]=e=>n.value=e),r],onClick:i},null,8,["row_data","modelValue"])))),128))])]),e.createElementVNode("div",qe,[e.createVNode(c,{params:a.value,onClick:s},null,8,["params"])])])}},__file:"src/components/form-json/layout/VFJLoopFieldGroup/VFJLoopFieldGroupRow.vue"};class ze{data_form={};field_options={};initial_values={};update(e){let o=e.config;if(console.log(987979,e),null!=o.list&&null!=o.list){null==this.data_form[o.list]&&(this.data_form[o.list]=[]),null==this.data_form[o.list][Number(o.id)]&&(this.data_form[o.list][Number(o.id)]={});let l=!0;for(let t=0;t<this.data_form[o.list].length;t++)if(this.data_form[o.list][t]?._i==Number(o.id)){this.data_form[o.list][t][o.field]=e.data,l=!1;break}l&&(this.data_form[o.list][Number(o.id)][o.field]=e.data,this.data_form[o.list][Number(o.id)]._i=Number(o.id));let t=[];for(let e=0;e<this.data_form[o.list].length;e++)null!=this.data_form[o.list][e]&&null!=this.data_form[o.list][e]&&t.push(this.data_form[o.list][e]);this.data_form[o.list]=t}else this.data_form[o.field]=e.data}delete(e){if(null==this.data_form[e.list])return!1;let o=[];for(let l=0;l<this.data_form[e.list].length;l++)this.data_form[e.list][l]._i!=e.id&&o.push(this.data_form[e.list][l]);return this.data_form[e.list]=o,!0}getValue(e){if(null!=this.data_form)return this.data_form[e]}deleteField(e){delete this.data_form[e]}}const Pe={class:"col"};var Ge={__name:"VFJLoopFieldGroup",props:["params","modelValue","class"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref(t.modelValue),a=e.ref(new ze),r=e.ref(new ze),i=e.ref(0),u=e.ref(new Le(t.params)),s=e.ref(u.value.btn_create),c=e.ref([]);function m(e){r.value.update(e),v({list:u.value.runtime_data_field})}function d(e){l("click",e)}function p(e){c.value.push({_i:i.value}),i.value++,v(e)}function f(e){for(let o=0;o<c.value.length;o++)if(c.value[o]._i==e.id){r.value.delete(e),c.value.splice(o,1);break}v(e)}function v(e){let o=e.list;l("update:modelValue",{config:{field:o},data:r.value.data_form[o]})}return e.onMounted((async()=>{r.value.field_options=n.value.field_options,r.value.initial_values=n.value.initial_values})),(l,t)=>{const n=e.resolveComponent("VFJButtonInput");return e.openBlock(),e.createElementBlock(e.Fragment,null,[e.createElementVNode("div",{class:e.normalizeClass(["row",o.class])},[e.createElementVNode("div",Pe,[e.createVNode(n,{onClick:p,params:s.value},null,8,["params"])])],2),(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(c.value,(o=>(e.openBlock(),e.createBlock(Me,{key:o,reg_data:o,params:u.value,modelValue:a.value,"onUpdate:modelValue":[t[0]||(t[0]=e=>a.value=e),m],onRemove:f,onClick:d},null,8,["reg_data","params","modelValue"])))),128))],64)}},__file:"src/components/form-json/layout/VFJLoopFieldGroup/VFJLoopFieldGroup.vue"};const Ae={I_BUTTON:M,I_CHECKBOX:H,I_COLOR:Q,I_DATE:ee,I_FILE:te,_IMAGE:ne,I_RADIO:se,I_RANGE:pe,I_SELECT:Ve,_TEXT:ge,I_TEXTAREA:Be,I_TEXT:Ee,I_NUMBER:Je,V_TABS:De,V_GROUP:Se,V_LOOP:Ge},He=0;class Xe{status=He;title="untitled";captcha_public_key="";field_options={};submit_msg=""}class Ye{component="VFJTabsSection";content=[]}class Ke{general_data=new Xe;sections=new Ye;runtime_data={};field_rels=[]}var Qe={__name:"FormularioJSON",props:["form_definition","modelValue"],emits:["update:modelValue","submit","input"],setup(o,{emit:l}){const t=o,n=e.ref(new ze),a=e.ref(new Ke),r=e.ref(new ze),i={submit:async function(){l("submit",r.value.data_form)}};function u(e){r.value.update(e),l("update:modelValue",r.value),l("input",e)}async function s(e){l("click",e.data),null!=e.config&&null!=i[e.config.action]&&await i[e.config.action](e)}return e.onMounted((async()=>{a.value=t.form_definition,n.value.data_form=t.modelValue?t.modelValue:{},n.value.field_options=a.value.general_data.field_options,n.value.initial_values=a.value.general_data.initial_values})),(o,l)=>(e.openBlock(),e.createBlock(e.resolveDynamicComponent(e.unref(Ae)[a.value.sections.component]),{params:a.value.sections.content,onClick:s,modelValue:n.value,"onUpdate:modelValue":[l[0]||(l[0]=e=>n.value=e),u]},null,8,["params","modelValue"]))},__file:"src/components/form-json/FormularioJSON.vue"},We={__name:"HTMLTag",props:["row_data","modelValue"],emits:["update:modelValue","click"],setup(o,{emit:l}){const t=o,n=e.ref(t.modelValue);function a(e){l("update:modelValue",e)}function r(e){l("click",e)}return e.onMounted((async()=>{})),(l,t)=>(e.openBlock(!0),e.createElementBlock(e.Fragment,null,e.renderList(o.row_data.content,(o=>(e.openBlock(),e.createBlock(e.resolveDynamicComponent(e.unref(Ae)[o.component]),{key:o,class:e.normalizeClass(o.class),params:o.params,"onUpdate:modelValue":[a,t[0]||(t[0]=e=>n.value=e)],modelValue:n.value,onClick:r},null,8,["class","params","modelValue"])))),128))},__file:"src/components/form-json/layout/HTMLTag.vue"};const Ze={install(e,o){e.use(B.default),e.directive("tooltip",D.default),e.component("InputText",b.default),e.component("RadioButton",F.default),e.component("Checkbox",y.default),e.component("Dropdown",h.default),e.component("Textarea",C.default),e.component("Calendar",I.default),e.component("Button",E.default),e.component("Image",x.default),e.component("ColorPicker",w.default),e.component("Slider",N.default),e.component("FileUpload",J.default),e.component("InputNumber",T.default),e.component("TabView",j.default),e.component("TabPanel",S.default),e.component("VFJButtonInput",M),e.component("FormularioJSON",Qe),e.component("HTMLTag",We)}},$e={install(e,o){e.use(Ze),e.component("ClienteFormularioDinamico",R)}};exports.VueClienteFormDinamico=$e;
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var vue = require('vue');
+var axios = require('axios');
+var InputText = require('primevue/inputtext');
+var Dropdown = require('primevue/dropdown');
+var Textarea = require('primevue/textarea');
+var PrimeVue = require('primevue/config');
+var RadioButton = require('primevue/radiobutton');
+var Checkbox = require('primevue/checkbox');
+var Calendar = require('primevue/calendar');
+var Button = require('primevue/button');
+var Image = require('primevue/image');
+var ColorPicker = require('primevue/colorpicker');
+var Slider = require('primevue/slider');
+var FileUpload = require('primevue/fileupload');
+var Tooltip = require('primevue/tooltip');
+var InputNumber = require('primevue/inputnumber');
+var TabView = require('primevue/tabview');
+var TabPanel = require('primevue/tabpanel');
+require('primevue/resources/themes/nova/theme.css');
+require('primevue/resources/primevue.min.css');
+require('primeicons/primeicons.css');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
+var InputText__default = /*#__PURE__*/_interopDefaultLegacy(InputText);
+var Dropdown__default = /*#__PURE__*/_interopDefaultLegacy(Dropdown);
+var Textarea__default = /*#__PURE__*/_interopDefaultLegacy(Textarea);
+var PrimeVue__default = /*#__PURE__*/_interopDefaultLegacy(PrimeVue);
+var RadioButton__default = /*#__PURE__*/_interopDefaultLegacy(RadioButton);
+var Checkbox__default = /*#__PURE__*/_interopDefaultLegacy(Checkbox);
+var Calendar__default = /*#__PURE__*/_interopDefaultLegacy(Calendar);
+var Button__default = /*#__PURE__*/_interopDefaultLegacy(Button);
+var Image__default = /*#__PURE__*/_interopDefaultLegacy(Image);
+var ColorPicker__default = /*#__PURE__*/_interopDefaultLegacy(ColorPicker);
+var Slider__default = /*#__PURE__*/_interopDefaultLegacy(Slider);
+var FileUpload__default = /*#__PURE__*/_interopDefaultLegacy(FileUpload);
+var Tooltip__default = /*#__PURE__*/_interopDefaultLegacy(Tooltip);
+var InputNumber__default = /*#__PURE__*/_interopDefaultLegacy(InputNumber);
+var TabView__default = /*#__PURE__*/_interopDefaultLegacy(TabView);
+var TabPanel__default = /*#__PURE__*/_interopDefaultLegacy(TabPanel);
+
+//import { getToken } from '../utils/auth'
+
+const create = function( url ){
+  const service = axios__default["default"].create({
+    baseURL: url, // url = base url + request url
+    withCredentials: true, // send cookies when cross-domain requests
+    timeout: 100000 // request timeout
+  });
+  
+  // request interceptor
+  // Seudo Proxy
+  service.interceptors.request.use(
+  
+    config => {
+      //const token = getToken();
+      //console.log(token)
+      //if (token !== null) {
+      //  config.headers['x-api-key'] = token
+      //}
+      return config
+    },
+    error => {
+  
+      // do something with request error
+      console.log("request err", error); // for debug
+      return Promise.reject(error)
+    }
+  );
+  
+  // response interceptor
+  service.interceptors.response.use(
+    /**
+     * If you want to get http information such as headers or status
+     * Please return  response => response
+    */
+  
+    /**
+     * Determine the request status by custom code
+     * Here is just an example
+     * You can also judge the status by HTTP Status Code
+     */
+    response => {
+      //loadingInstance.close()
+  
+      const res = response.data;
+      //console.log("resdata", res)
+  
+      // if the custom code is not 20000, it is judged as an error.
+      // console.log(res)
+      return res
+  
+    },
+    error => {
+  
+      console.log('err' + error); // for debug
+  
+      return { stat:false, error:error }
+    }
+  );
+  return service
+};
+
+function getForm( urlAPI, id ) {
+  const request = create(urlAPI);
+  return request({
+    url: '/form/get_form?id='+id,
+    method: 'get',
+    data: ''
+  })
+}
+
+function getSession( urlAPI, data ) {
+  const request = create(urlAPI);
+  return request({
+    url: '/form/get_session',
+    method: 'post',
+    data: data
+  })
+}
+
+var script$j = {
+  __name: 'ClienteFormularioDinamico',
+  props: ['config', 'modelValue'],
+  emits: ['update:modelValue', 'input', 'submit', 'click' ],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const form_data = vue.ref( props.modelValue );
+const form_def  = vue.ref( null );
+
+vue.ref( null );
+
+//REENVIO EVENTOS
+function update_model( evnt ){  emit( 'update:modelValue', evnt ); }
+function inputRepeat( event ){ emit('input', event); }
+function submitRepeat( event ){ emit('submit' ,event); }
+function clickRepeat( event ){ emit('click' ,event); }
+
+
+async function callGetForm(){
+  let res = await getForm(props.config.api, props.config.id);
+  if (res.stat) {
+    form_def.value = res.definition;
+  } else {
+    alert(res.text);
+  }
+}
+
+vue.onMounted(async ()=>{
+  let res = await getSession(props.config.api);
+
+  if (res.stat) {
+    await callGetForm();
+  } else {
+    alert(res.text);
+  }
+});
+
+return (_ctx, _cache) => {
+  const _component_FormularioJSON = vue.resolveComponent("FormularioJSON");
+
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    vue.createTextVNode(" Cliente Formulario Dinámico "),
+    (form_def.value !== null)
+      ? (vue.openBlock(), vue.createBlock(_component_FormularioJSON, {
+          key: 0,
+          form_definition: form_def.value,
+          modelValue: form_data.value,
+          "onUpdate:modelValue": [
+            _cache[0] || (_cache[0] = $event => ((form_data).value = $event)),
+            update_model
+          ],
+          onSubmit: submitRepeat,
+          onInput: inputRepeat,
+          onClick: clickRepeat
+        }, null, 8 /* PROPS */, ["form_definition", "modelValue"]))
+      : vue.createCommentVNode("v-if", true),
+    vue.createTextVNode(" " + vue.toDisplayString(form_data.value), 1 /* TEXT */)
+  ], 64 /* STABLE_FRAGMENT */))
+}
+}
+
+};
+
+script$j.__file = "src/ClienteFormularioDinamico.vue";
+
+function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
+    const model  = vue.ref();
+    const config = vue.ref(props.params);
+    
+    function input_event(){
+        emit('update:modelValue', { config: config.value, data: model.value });
+    }
+
+    function click_event(evnt){
+        emit('click', { config: config.value, data: model.value, evnt:evnt });
+    }
+
+    vue.onMounted(async ()=>{
+        if (props.modelValue != undefined && config.value.field_options != undefined) {
+            let data = props.modelValue.field_options; 
+            if (data != undefined)
+                optionals.field_options.value = data[ config.value.field_options ];
+        }
+        
+        if (props.modelValue !== undefined && props.modelValue.getValue !== undefined) {
+            let value = props.modelValue.getValue( config.value.field );
+            if (value != undefined) model.value = value;
+        } else {
+            console.log(45645,props.modelValue);
+        }
+    });
+
+    return { input_event, click_event, model, config }
+}
+
+class VFJInputConfigBase {
+    label = ''
+    class = 'col mb-3'
+    disabled = false
+    field = ''
+    dfield = ''
+    required = false
+    autocomplete_options = ''
+    tooltip = ''
+    list = null
+    id = 0
+    placeholder = ''
+
+    constructor( params ){
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+//Se usa para definir los parametros inciales de configuración del componente VFJButtonInput
+class VFJButtonInputConf extends VFJInputConfigBase {
+    icon  = ''; iconPos = ''
+    data = true
+    action = ''
+    
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+var script$i = {
+  __name: 'VFJButtonInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { click_event, model, config } = useInputCommon( emit, VFJButtonInputConf, props );
+
+
+return (_ctx, _cache) => {
+  const _component_Button = vue.resolveComponent("Button");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return vue.withDirectives((vue.openBlock(), vue.createBlock(_component_Button, {
+    label: vue.unref(config).label,
+    class: vue.normalizeClass(vue.unref(config).class),
+    icon: vue.unref(config).icon,
+    iconPos: vue.unref(config).iconPos,
+    onClick: vue.unref(click_event)
+  }, null, 8 /* PROPS */, ["label", "class", "icon", "iconPos", "onClick"])), [
+    [_directive_tooltip, vue.unref(config).tooltip]
+  ])
+}
+}
+
+};
+
+script$i.__file = "src/components/form-json/columns/VFJButtonInput/VFJButtonInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJCheckboxInput
+class VFJCheckboxInputConf extends VFJInputConfigBase{
+    option_id     = ''
+    option_label  = ''
+    field_options = ''
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$d = ["for"];
+const _hoisted_2$b = { class: "input-group row" };
+const _hoisted_3$2 = { for: "{{ config.field + option[config.option_id] }}" };
+
+
+var script$h = {
+  __name: 'VFJCheckboxInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const field_options = vue.ref([]);
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJCheckboxInputConf, props, { field_options:field_options });
+
+return (_ctx, _cache) => {
+  const _component_Checkbox = vue.resolveComponent("Checkbox");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).field,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$d),
+    vue.createElementVNode("div", _hoisted_2$b, [
+      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(field_options.value, (option) => {
+        return (vue.openBlock(), vue.createElementBlock("div", {
+          class: "field-radiobutton col-12",
+          key: option
+        }, [
+          vue.createVNode(_component_Checkbox, {
+            inputId: "{{config.field + option[config.option_id]}}",
+            name: vue.unref(config).field,
+            onChange: vue.unref(input_event),
+            onClick: vue.unref(click_event),
+            value: option[vue.unref(config).option_id],
+            modelValue: vue.unref(model),
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null))
+          }, null, 8 /* PROPS */, ["name", "onChange", "onClick", "value", "modelValue"]),
+          vue.createElementVNode("label", _hoisted_3$2, vue.toDisplayString(option[vue.unref(config).option_label]), 1 /* TEXT */)
+        ]))
+      }), 128 /* KEYED_FRAGMENT */))
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$h.__file = "src/components/form-json/columns/VFJCheckboxInput/VFJCheckboxInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJColorInput
+class VFJColorInputConf extends VFJInputConfigBase{
+    inline = false
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$c = ["for"];
+const _hoisted_2$a = { class: "input-group" };
+
+
+var script$g = {
+  __name: 'VFJColorInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJColorInputConf, props );
+
+return (_ctx, _cache) => {
+  const _component_ColorPicker = vue.resolveComponent("ColorPicker");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).field,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$c),
+    vue.createElementVNode("div", _hoisted_2$a, [
+      vue.withDirectives(vue.createVNode(_component_ColorPicker, {
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        inline: vue.unref(config).inline,
+        onChange: vue.unref(input_event),
+        onClick: vue.unref(click_event)
+      }, null, 8 /* PROPS */, ["modelValue", "inline", "onChange", "onClick"]), [
+        [_directive_tooltip, vue.unref(config).tooltip]
+      ])
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$g.__file = "src/components/form-json/columns/VFJColorInput/VFJColorInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJDateInput
+class VFJDateInputConf extends VFJInputConfigBase {
+    inline = false
+    selectionMode = 'single'
+    dateFormat = 'dd.mm.yy'
+    showTime = false
+    value = null
+
+    constructor( params ){
+        super(params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++){
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];}
+    }
+}
+
+const _hoisted_1$b = ["for"];
+const _hoisted_2$9 = { class: "input-group" };
+
+
+var script$f = {
+  __name: 'VFJDateInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJDateInputConf, props );
+
+return (_ctx, _cache) => {
+  const _component_Calendar = vue.resolveComponent("Calendar");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).field,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$b),
+    vue.createElementVNode("div", _hoisted_2$9, [
+      vue.withDirectives(vue.createVNode(_component_Calendar, {
+        disabled: vue.unref(config).disabled,
+        inline: vue.unref(config).inline,
+        selectionMode: vue.unref(config).selectionMode,
+        dateFormat: vue.unref(config).dateFormat,
+        showTime: vue.unref(config).showTime,
+        placeholder: vue.unref(config).placeholder,
+        onYearChange: vue.unref(input_event),
+        onDateSelect: vue.unref(input_event),
+        onClick: vue.unref(click_event),
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        class: "w-100"
+      }, null, 8 /* PROPS */, ["disabled", "inline", "selectionMode", "dateFormat", "showTime", "placeholder", "onYearChange", "onDateSelect", "onClick", "modelValue"]), [
+        [_directive_tooltip, vue.unref(config).tooltip]
+      ])
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$f.__file = "src/components/form-json/columns/VFJDateInput/VFJDateInput.vue";
+
+const _hoisted_1$a = ["for"];
+const _hoisted_2$8 = { class: "input-group" };
+
+
+var script$e = {
+  __name: 'VFJFileInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue'],
+  setup(__props, { emit }) {
+
+
+
+
+function input_event( evnt ){
+    emit('update:modelValue', { config: config.value, data: model.value });
+}
+
+return (_ctx, _cache) => {
+  const _component_FileUpload = vue.resolveComponent("FileUpload");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(__props.params.class)
+  }, [
+    vue.createElementVNode("label", {
+      for: __props.params.field,
+      class: "form-label"
+    }, vue.toDisplayString(__props.params.label), 9 /* TEXT, PROPS */, _hoisted_1$a),
+    vue.createElementVNode("div", _hoisted_2$8, [
+      vue.createVNode(_component_FileUpload, {
+        name: "demo[]",
+        customUpload: true,
+        onUploader: input_event
+      })
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$e.__file = "src/components/form-json/columns/VFJFileInput/VFJFileInput.vue";
+
+var script$d = {
+  __name: 'VFJImage',
+  props: ['params'],
+  setup(__props) {
+
+
+
+return (_ctx, _cache) => {
+  const _component_Image = vue.resolveComponent("Image");
+
+  return (vue.openBlock(), vue.createBlock(_component_Image, {
+    src: __props.params.src,
+    alt: __props.params.alt
+  }, null, 8 /* PROPS */, ["src", "alt"]))
+}
+}
+
+};
+
+script$d.__file = "src/components/form-json/columns/VFJImage/VFJImage.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJRadioBtnInput
+
+class VFJRadioBtnInputConf extends VFJInputConfigBase {
+    option_id     = ''
+    option_label  = ''
+    field_options = ''
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$9 = ["for"];
+const _hoisted_2$7 = { class: "input-group row" };
+const _hoisted_3$1 = { for: "{{ config.field + option[config.option_id] }}" };
+
+
+var script$c = {
+  __name: 'VFJRadioBtnInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+const field_options = vue.ref([]);
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJRadioBtnInputConf, props, { field_options:field_options });
+
+return (_ctx, _cache) => {
+  const _component_RadioButton = vue.resolveComponent("RadioButton");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).field,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$9),
+    vue.createElementVNode("div", _hoisted_2$7, [
+      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(field_options.value, (option) => {
+        return (vue.openBlock(), vue.createElementBlock("div", {
+          class: "field-radiobutton col-12",
+          key: option
+        }, [
+          vue.createVNode(_component_RadioButton, {
+            inputId: "{{config.field + option[config.option_id]}}",
+            name: vue.unref(config).field,
+            onChange: vue.unref(input_event),
+            onClick: vue.unref(click_event),
+            value: option[vue.unref(config).option_id],
+            modelValue: vue.unref(model),
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null))
+          }, null, 8 /* PROPS */, ["name", "onChange", "onClick", "value", "modelValue"]),
+          vue.createElementVNode("label", _hoisted_3$1, vue.toDisplayString(option[vue.unref(config).option_label]), 1 /* TEXT */)
+        ]))
+      }), 128 /* KEYED_FRAGMENT */))
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$c.__file = "src/components/form-json/columns/VFJRadioBtnInput/VFJRadioBtnInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJRangeInput
+
+class VFJRangeInputConf extends VFJInputConfigBase{
+    step = 1
+    min  = 0
+    max  = 100
+    range = false
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$8 = ["for"];
+const _hoisted_2$6 = { class: "input-group" };
+
+
+var script$b = {
+  __name: 'VFJRangeInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJRangeInputConf, props );
+
+return (_ctx, _cache) => {
+  const _component_Slider = vue.resolveComponent("Slider");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: __props.params.field,
+      class: "form-label"
+    }, vue.toDisplayString(__props.params.label), 9 /* TEXT, PROPS */, _hoisted_1$8),
+    vue.createElementVNode("div", _hoisted_2$6, [
+      vue.createVNode(_component_Slider, {
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        range: vue.unref(config).range,
+        onSlideend: vue.unref(input_event),
+        step: vue.unref(config).step,
+        min: vue.unref(config).min,
+        max: vue.unref(config).max,
+        class: "w-100",
+        onClick: vue.unref(click_event)
+      }, null, 8 /* PROPS */, ["modelValue", "range", "onSlideend", "step", "min", "max", "onClick"])
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$b.__file = "src/components/form-json/columns/VFJRangeInput/VFJRangeInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJSelectInput
+
+class VFJSelectInputConf extends VFJInputConfigBase {
+    option_id     = ''
+    option_label  = ''
+    field_options = ''
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$7 = ["for"];
+const _hoisted_2$5 = { class: "input-group" };
+
+
+var script$a = {
+  __name: 'VFJSelectInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+const field_options = vue.ref();
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJSelectInputConf, props,{ field_options:field_options });
+
+
+return (_ctx, _cache) => {
+  const _component_Dropdown = vue.resolveComponent("Dropdown");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).key,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$7),
+    vue.withDirectives((vue.openBlock(), vue.createElementBlock("div", _hoisted_2$5, [
+      vue.createVNode(_component_Dropdown, {
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        class: "w-100",
+        options: field_options.value,
+        optionLabel: vue.unref(config).option_label,
+        optionValue: vue.unref(config).option_id,
+        onChange: vue.unref(input_event),
+        onClick: vue.unref(click_event)
+      }, null, 8 /* PROPS */, ["modelValue", "options", "optionLabel", "optionValue", "onChange", "onClick"])
+    ])), [
+      [_directive_tooltip, vue.unref(config).tooltip]
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$a.__file = "src/components/form-json/columns/VFJSelectInput/VFJSelectInput.vue";
+
+const _hoisted_1$6 = ["innerHTML", "styles"];
+
+
+var script$9 = {
+  __name: 'VFJText',
+  props: ['params'],
+  setup(__props) {
+
+
+
+return (_ctx, _cache) => {
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    innerHTML: __props.params.html,
+    styles: __props.params.styles
+  }, null, 8 /* PROPS */, _hoisted_1$6))
+}
+}
+
+};
+
+script$9.__file = "src/components/form-json/columns/VFJText/VFJText.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJTextareaInput
+
+class VFJTextareaInputConf extends VFJInputConfigBase {
+    rows = 5
+    cols = 30
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$5 = ["for"];
+const _hoisted_2$4 = { class: "input-group" };
+
+
+var script$8 = {
+  __name: 'VFJTextareaInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJTextareaInputConf, props );
+
+return (_ctx, _cache) => {
+  const _component_Textarea = vue.resolveComponent("Textarea");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).key,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$5),
+    vue.createElementVNode("div", _hoisted_2$4, [
+      vue.withDirectives(vue.createVNode(_component_Textarea, {
+        class: "w-100",
+        placeholder: vue.unref(config).placeholder,
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        rows: vue.unref(config).rows,
+        cols: vue.unref(config).cols,
+        disabled: vue.unref(config).disabled,
+        onClick: vue.unref(click_event),
+        onInput: vue.unref(input_event)
+      }, null, 8 /* PROPS */, ["placeholder", "modelValue", "rows", "cols", "disabled", "onClick", "onInput"]), [
+        [_directive_tooltip, vue.unref(config).tooltip]
+      ])
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$8.__file = "src/components/form-json/columns/VFJTextareaInput/VFJTextareaInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJTextInputConf
+
+class VFJTextInputConf extends VFJInputConfigBase {
+    type = 'text'
+    params = {}
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$4 = ["for"];
+const _hoisted_2$3 = { class: "input-group" };
+
+
+var script$7 = {
+  __name: 'VFJTextInput',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJTextInputConf, props );
+
+return (_ctx, _cache) => {
+  const _component_InputText = vue.resolveComponent("InputText");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).key,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$4),
+    vue.createElementVNode("div", _hoisted_2$3, [
+      vue.withDirectives(vue.createVNode(_component_InputText, {
+        disabled: vue.unref(config).disabled,
+        onInput: vue.unref(input_event),
+        onClick: vue.unref(click_event),
+        type: vue.unref(config).type,
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        class: "w-100"
+      }, null, 8 /* PROPS */, ["disabled", "onInput", "onClick", "type", "modelValue"]), [
+        [_directive_tooltip, vue.unref(config).tooltip]
+      ])
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$7.__file = "src/components/form-json/columns/VFJTextInput/VFJTextInput.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJNumber
+
+class VFJNumberConf extends VFJInputConfigBase {
+    min               = null
+    max               = null
+    mode              = 'decimal'
+    minFractionDigits = null
+    maxFractionDigits = null
+    locale            = 'es-AR'
+    currency          = 'USD'
+    suffix            = ''
+    prefix            = ''
+    step              = 1
+    format            = true
+    showButtons       = true
+
+    constructor( params ){
+        super (params);
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$3 = ["for"];
+const _hoisted_2$2 = { class: "input-group" };
+
+
+var script$6 = {
+  __name: 'VFJNumber',
+  props: ['params', 'modelValue' ],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const { input_event, click_event, model, config } = useInputCommon( emit, VFJNumberConf, props );
+
+return (_ctx, _cache) => {
+  const _component_InputNumber = vue.resolveComponent("InputNumber");
+  const _directive_tooltip = vue.resolveDirective("tooltip");
+
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(vue.unref(config).class)
+  }, [
+    vue.createElementVNode("label", {
+      for: vue.unref(config).key,
+      class: "form-label"
+    }, vue.toDisplayString(vue.unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$3),
+    vue.createElementVNode("div", _hoisted_2$2, [
+      vue.withDirectives(vue.createVNode(_component_InputNumber, {
+        disabled: vue.unref(config).disabled,
+        min: vue.unref(config).min,
+        max: vue.unref(config).max,
+        step: vue.unref(config).step,
+        format: vue.unref(config).format,
+        minFractionDigits: vue.unref(config).minFractionDigits,
+        maxFractionDigits: vue.unref(config).maxFractionDigits,
+        currency: vue.unref(config).currency,
+        mode: vue.unref(config).mode,
+        suffix: vue.unref(config).suffix,
+        prefix: vue.unref(config).prefix,
+        showButtons: vue.unref(config).showButtons,
+        placeholder: vue.unref(config).placeholder,
+        onInput: vue.unref(input_event),
+        onClick: vue.unref(click_event),
+        type: vue.unref(config).type,
+        modelValue: vue.unref(model),
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(model) ? (model).value = $event : null)),
+        class: "w-100"
+      }, null, 8 /* PROPS */, ["disabled", "min", "max", "step", "format", "minFractionDigits", "maxFractionDigits", "currency", "mode", "suffix", "prefix", "showButtons", "placeholder", "onInput", "onClick", "type", "modelValue"]), [
+        [_directive_tooltip, vue.unref(config).tooltip]
+      ])
+    ])
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$6.__file = "src/components/form-json/columns/VFJNumber/VFJNumber.vue";
+
+var script$5 = {
+  __name: 'VFJTabsSection',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+const model = vue.ref(props.modelValue);
+
+
+const page  = vue.ref(0);
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt);
+}
+
+function click( evnt ){
+    emit('click', evnt);
+
+    if (evnt.config?.action != undefined && ACTION_INDEX[ evnt.config.action ] != undefined) 
+            ACTION_INDEX[ evnt.config.action ]( evnt );
+}
+
+function sig_page(){
+    if ((page.value + 1) < props.params.length)
+        page.value ++;
+}
+
+function prev_page(){
+    if ((page.value - 1) >= 0)
+        page.value --;
+}
+
+function section_goTo( params ){
+    page.value = params.config.action_params.id;
+}
+
+const ACTION_INDEX = {
+    'section_next' : sig_page,
+    'section_back' : prev_page,
+    'section_goTo' : section_goTo
+};
+
+vue.onMounted(async ()=>{
+});
+
+return (_ctx, _cache) => {
+  const _component_HTMLTag = vue.resolveComponent("HTMLTag");
+  const _component_TabPanel = vue.resolveComponent("TabPanel");
+  const _component_TabView = vue.resolveComponent("TabView");
+
+  return (vue.openBlock(), vue.createBlock(_component_TabView, { activeIndex: page.value }, {
+    default: vue.withCtx(() => [
+      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(__props.params, (section) => {
+        return (vue.openBlock(), vue.createBlock(_component_TabPanel, {
+          key: section,
+          header: section.header
+        }, {
+          default: vue.withCtx(() => [
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(section.content, (row_data) => {
+              return (vue.openBlock(), vue.createElementBlock("div", {
+                class: vue.normalizeClass(row_data.class)
+              }, [
+                (vue.openBlock(), vue.createBlock(_component_HTMLTag, {
+                  row_data: row_data,
+                  key: row_data,
+                  modelValue: model.value,
+                  "onUpdate:modelValue": [
+                    _cache[0] || (_cache[0] = $event => ((model).value = $event)),
+                    update_model
+                  ],
+                  onClick: click
+                }, null, 8 /* PROPS */, ["row_data", "modelValue"]))
+              ], 2 /* CLASS */))
+            }), 256 /* UNKEYED_FRAGMENT */))
+          ]),
+          _: 2 /* DYNAMIC */
+        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["header"]))
+      }), 128 /* KEYED_FRAGMENT */))
+    ]),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["activeIndex"]))
+}
+}
+
+};
+
+script$5.__file = "src/components/form-json/layout/VFJTabsSection.vue";
+
+const _hoisted_1$2 = { class: "component-group" };
+const _hoisted_2$1 = { class: "row" };
+
+
+var script$4 = {
+  __name: 'VFJComponentGroup',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const model = vue.ref( props.modelValue );
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt);
+}
+
+function click( evnt ){
+    emit('click', evnt);
+}
+
+vue.onMounted(async ()=>{
+});
+
+return (_ctx, _cache) => {
+  const _component_HTMLTag = vue.resolveComponent("HTMLTag");
+
+  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$2, [
+    vue.createElementVNode("div", _hoisted_2$1, [
+      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(__props.params.content, (row_data) => {
+        return (vue.openBlock(), vue.createBlock(_component_HTMLTag, {
+          row_data: row_data,
+          key: row_data,
+          modelValue: model.value,
+          "onUpdate:modelValue": [
+            _cache[0] || (_cache[0] = $event => ((model).value = $event)),
+            update_model
+          ],
+          onClick: click
+        }, null, 8 /* PROPS */, ["row_data", "modelValue"]))
+      }), 128 /* KEYED_FRAGMENT */))
+    ])
+  ]))
+}
+}
+
+};
+
+script$4.__file = "src/components/form-json/layout/VFJComponentGroup.vue";
+
+//Se usa para definir los parametros inciales de configuración del componente VFJLoopFieldGroup
+class VFJLoopFieldGroupConf {
+    
+    runtime_data_field = ''
+    content = ''
+    btn_create = { label: 'Agregar', icon: 'pi pi-plus', iconPos: 'left' }
+    btn_delete = { label: '', icon: 'pi pi-times', class: 'p-button-raised p-button-rounded p-button-danger' }
+    initial_values_id = ''
+
+    constructor( params ){
+        let keys = Object.keys(params);
+        for (let c=0; c < keys.length; c++)
+            if (this[keys[c]] !== undefined)
+                this[keys[c]] = params[keys[c]];
+    }
+}
+
+const _hoisted_1$1 = { class: "row" };
+const _hoisted_2 = { class: "col" };
+const _hoisted_3 = { class: "row component-group" };
+const _hoisted_4 = { class: "col-auto" };
+
+var script$3 = {
+  __name: 'VFJLoopFieldGroupRow',
+  props: ['params', 'reg_data', 'modelValue'],
+  emits: ['update:modelValue', 'click', 'remove'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+const model = vue.ref(props.modelValue);
+
+
+
+const _remove_btn_cfg = vue.ref(props.params.btn_delete);
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt);
+}
+
+function click( evnt ){
+    emit('click', evnt);
+}
+
+function loop_data() {
+    let params = props.params; 
+    let field  = params.runtime_data_field;
+    let arr    = params.content;
+
+    for (let i=0; i < arr.length; i++){
+        for (let j=0; j < arr[i].content.length; j++){
+            let c_params = arr[i].content[j].params;
+            if (c_params['dfield'] != undefined) {
+                c_params['field'] = c_params.dfield;
+                c_params['list']  = field;
+                c_params['id']    = props.reg_data._i;
+                if (model.value[ params.initial_values_id ])
+                    c_params['value'] = model.value[ params.initial_values_id ][ c_params['dfield'] ];
+            }
+        }
+    }
+    
+    return arr
+}
+
+
+function click_delete( evnt ){
+    emit('remove', { id: props.reg_data._i, list: props.params.runtime_data_field });
+}
+
+
+return (_ctx, _cache) => {
+  const _component_HTMLTag = vue.resolveComponent("HTMLTag");
+  const _component_VFJButtonInput = vue.resolveComponent("VFJButtonInput");
+
+  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$1, [
+    vue.createElementVNode("div", _hoisted_2, [
+      vue.createElementVNode("div", _hoisted_3, [
+        (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(loop_data(), (row_data) => {
+          return (vue.openBlock(), vue.createBlock(_component_HTMLTag, {
+            row_data: row_data,
+            key: row_data,
+            modelValue: model.value,
+            "onUpdate:modelValue": [
+              _cache[0] || (_cache[0] = $event => ((model).value = $event)),
+              update_model
+            ],
+            onClick: click
+          }, null, 8 /* PROPS */, ["row_data", "modelValue"]))
+        }), 128 /* KEYED_FRAGMENT */))
+      ])
+    ]),
+    vue.createElementVNode("div", _hoisted_4, [
+      vue.createVNode(_component_VFJButtonInput, {
+        params: _remove_btn_cfg.value,
+        onClick: click_delete
+      }, null, 8 /* PROPS */, ["params"])
+    ])
+  ]))
+}
+}
+
+};
+
+script$3.__file = "src/components/form-json/layout/VFJLoopFieldGroup/VFJLoopFieldGroupRow.vue";
+
+class FormStorage {
+
+    data_form      = {}
+    field_options  = {}
+    initial_values = {}
+
+    update( evnt ){
+        let p = evnt.config;
+        console.log(987979,evnt);
+        if ( p.list != undefined && p.list != null ){
+            if (this.data_form[ p.list ] == undefined) 
+                this.data_form[ p.list ] = [];
+            
+            if (this.data_form[ p.list ][ Number(p.id) ] == undefined)
+                this.data_form[ p.list ][ Number(p.id) ] = {};
+            
+            let is_new = true;
+            for (let c=0; c < this.data_form[ p.list ].length; c++)
+                if (this.data_form[ p.list ][ c ]?.[ '_i' ] == Number(p.id)) {
+                    this.data_form[ p.list ][ c ][ p.field ] = evnt.data;
+                    is_new = false;
+                    break;
+                }
+
+            if (is_new){
+                this.data_form[ p.list ][ Number(p.id) ][ p.field ] = evnt.data;
+                this.data_form[ p.list ][ Number(p.id) ][ '_i' ]    = Number(p.id);
+            }
+            
+            let aux = [];
+            for (let c = 0; c < this.data_form[ p.list ].length; c++)
+                if (this.data_form[ p.list ][c] != undefined && this.data_form[ p.list ][c] != null ) aux.push(this.data_form[ p.list ][c]);
+
+            this.data_form[ p.list ] = aux;
+        } else 
+            this.data_form[ p.field ] = evnt.data;
+    }
+
+    delete( evnt ){
+        if (this.data_form[evnt.list] == undefined)
+            return false
+
+        let aux = [];
+        for (let c=0; c < this.data_form[evnt.list].length; c++)
+            if (this.data_form[evnt.list][c]._i != evnt.id)
+                aux.push( this.data_form[evnt.list][c] );
+        
+        this.data_form[evnt.list] = aux;
+        return true
+    }
+
+    getValue( id_field ){
+        if (this.data_form != undefined)
+            return this.data_form[ id_field ]
+    }
+
+    deleteField( id_field ){
+        delete this.data_form[id_field];
+    }
+}
+
+const _hoisted_1 = { class: "col" };
+
+
+var script$2 = {
+  __name: 'VFJLoopFieldGroup',
+  props: ['params', 'modelValue', 'class'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+const model      = vue.ref( props.modelValue );
+const model_rows = vue.ref(new FormStorage());
+const model_aux  = vue.ref(new FormStorage());
+
+
+
+const u_id = vue.ref(0);
+const conf = vue.ref(new VFJLoopFieldGroupConf(props.params));
+const cfg_new_btn = vue.ref(conf.value.btn_create);
+const list_data = vue.ref([]);
+
+function update_model( evnt ){
+    model_aux.value.update( evnt );
+    sync_upd( { list : conf.value.runtime_data_field } );
+}
+
+function click_event( evnt ){
+    emit('click', evnt);
+}
+
+function click_add( evnt ){
+    list_data.value.push({ _i: u_id.value });
+    u_id.value ++;
+    sync_upd( evnt );
+}
+
+function click_remove(evnt){
+    for (let i=0; i < list_data.value.length; i++){
+        if (list_data.value[i]._i == evnt.id){
+            model_aux.value.delete(evnt);
+            list_data.value.splice(i,1);
+            break;
+        }
+    }
+    sync_upd( evnt );    
+}
+
+function sync_upd( evnt ){
+    let l = evnt.list;
+    emit('update:modelValue', {
+        'config': { field : l  },
+        'data' : model_aux.value.data_form[ l ]
+    });
+}
+
+vue.onMounted(async ()=>{
+    model_aux.value.field_options  = model.value.field_options;
+    model_aux.value.initial_values = model.value.initial_values;
+});
+
+return (_ctx, _cache) => {
+  const _component_VFJButtonInput = vue.resolveComponent("VFJButtonInput");
+
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    vue.createElementVNode("div", {
+      class: vue.normalizeClass(["row", __props.class])
+    }, [
+      vue.createElementVNode("div", _hoisted_1, [
+        vue.createVNode(_component_VFJButtonInput, {
+          onClick: click_add,
+          params: cfg_new_btn.value
+        }, null, 8 /* PROPS */, ["params"])
+      ])
+    ], 2 /* CLASS */),
+    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(list_data.value, (reg_data) => {
+      return (vue.openBlock(), vue.createBlock(script$3, {
+        key: reg_data,
+        reg_data: reg_data,
+        params: conf.value,
+        modelValue: model_rows.value,
+        "onUpdate:modelValue": [
+          _cache[0] || (_cache[0] = $event => ((model_rows).value = $event)),
+          update_model
+        ],
+        onRemove: click_remove,
+        onClick: click_event
+      }, null, 8 /* PROPS */, ["reg_data", "params", "modelValue"]))
+    }), 128 /* KEYED_FRAGMENT */))
+  ], 64 /* STABLE_FRAGMENT */))
+}
+}
+
+};
+
+script$2.__file = "src/components/form-json/layout/VFJLoopFieldGroup/VFJLoopFieldGroup.vue";
+
+const COMPONENTS_REFS = {
+    'I_BUTTON' : script$i,
+    'I_CHECKBOX' : script$h,
+    'I_COLOR' : script$g,
+    'I_DATE' : script$f,
+    'I_FILE' : script$e,
+    '_IMAGE' : script$d,
+    'I_RADIO' : script$c,
+    'I_RANGE' : script$b,
+    'I_SELECT' : script$a,
+    '_TEXT' : script$9,
+    'I_TEXTAREA' : script$8,
+    'I_TEXT' : script$7,
+    'I_NUMBER' : script$6,
+
+    'V_TABS' : script$5,
+    'V_GROUP' : script$4,
+    'V_LOOP' : script$2
+};
+
+const STATUS = {
+    DRAFT: 0,
+    PUBLISHED: 1
+};
+
+class FormConfigGeneralData{
+    status             = STATUS['DRAFT']
+    title              = 'untitled'
+    captcha_public_key = ''
+    field_options      = {}
+    submit_msg         = ''
+}
+
+class FormConfigSections {
+    component = 'VFJTabsSection'
+    content = []
+}
+
+class FormConfig {
+    gral         = new FormConfigGeneralData()
+    sections     = new FormConfigSections()
+    runtime_data = {}
+    field_rels   = []
+}
+
+var script$1 = {
+  __name: 'FormularioJSON',
+  props: ['form_definition', 'modelValue'],
+  emits: ['update:modelValue', 'submit', 'input'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+
+const model = vue.ref(new FormStorage());
+
+const formConfig  = vue.ref(new FormConfig());
+const formStorage = vue.ref(new FormStorage());
+
+const BTN_ACTION_INDEX = {
+    'submit' : submit_form
+};
+
+async function submit_form(){
+    emit('submit', formStorage.value.data_form);
+}
+
+function update_model( evnt ){
+    formStorage.value.update( evnt );
+    emit('update:modelValue', formStorage.value);
+    emit('input', evnt);
+}
+
+async function click( evnt ){
+    emit( 'click', evnt.data );
+
+    if (evnt.config != undefined && BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
+        await BTN_ACTION_INDEX[ evnt.config.action ]( evnt );
+}
+
+vue.onMounted(async ()=>{
+    formConfig.value = props.form_definition;
+    model.value.data_form      = props.modelValue ? props.modelValue : {}; 
+    model.value.field_options  = formConfig.value.gral.field_options;
+    model.value.initial_values = formConfig.value.gral.initial_values;
+});
+
+return (_ctx, _cache) => {
+  return (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(COMPONENTS_REFS)[ formConfig.value.sections.component ]), {
+    params: formConfig.value.sections.content,
+    onClick: click,
+    modelValue: model.value,
+    "onUpdate:modelValue": [
+      _cache[0] || (_cache[0] = $event => ((model).value = $event)),
+      update_model
+    ]
+  }, null, 8 /* PROPS */, ["params", "modelValue"]))
+}
+}
+
+};
+
+script$1.__file = "src/components/form-json/FormularioJSON.vue";
+
+var script = {
+  __name: 'HTMLTag',
+  props: ['row_data', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+
+const model = vue.ref( props.modelValue );
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt);
+}
+
+function click( evnt ){
+    emit('click', evnt);
+}
+
+vue.onMounted(async ()=>{
+});
+
+return (_ctx, _cache) => {
+  return (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(__props.row_data.content, (col_data) => {
+    return (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(COMPONENTS_REFS)[ col_data.component ]), {
+      key: col_data,
+      class: vue.normalizeClass(col_data.class),
+      params: col_data.params,
+      "onUpdate:modelValue": [
+        update_model,
+        _cache[0] || (_cache[0] = $event => ((model).value = $event))
+      ],
+      modelValue: model.value,
+      onClick: click
+    }, null, 8 /* PROPS */, ["class", "params", "modelValue"]))
+  }), 128 /* KEYED_FRAGMENT */))
+}
+}
+
+};
+
+script.__file = "src/components/form-json/layout/HTMLTag.vue";
+
+const VueFormJSON = {
+    install(Vue, options) {
+        Vue.use(PrimeVue__default["default"]);
+
+        Vue.directive('tooltip', Tooltip__default["default"]);
+        
+        Vue.component("InputText", InputText__default["default"]);
+        Vue.component("RadioButton", RadioButton__default["default"]);
+        Vue.component("Checkbox", Checkbox__default["default"]);
+        Vue.component("Dropdown", Dropdown__default["default"]);
+        Vue.component("Textarea", Textarea__default["default"]);
+        Vue.component("Calendar", Calendar__default["default"]);
+        Vue.component("Button", Button__default["default"]);
+        Vue.component("Image", Image__default["default"]);
+        Vue.component("ColorPicker", ColorPicker__default["default"]);
+        Vue.component("Slider", Slider__default["default"]);
+        Vue.component("FileUpload", FileUpload__default["default"]);
+        Vue.component("InputNumber", InputNumber__default["default"]);
+        
+        Vue.component("TabView", TabView__default["default"]);
+        Vue.component("TabPanel", TabPanel__default["default"]);
+
+        Vue.component("VFJButtonInput", script$i);
+
+        Vue.component("FormularioJSON", script$1);
+        Vue.component("HTMLTag", script);
+    }
+};
+
+const VueClienteFormDinamico = {
+    install(Vue, options) {
+        Vue.use(VueFormJSON);
+        Vue.component("ClienteFormularioDinamico", script$j);
+    }
+};
+
+exports.VueClienteFormDinamico = VueClienteFormDinamico;

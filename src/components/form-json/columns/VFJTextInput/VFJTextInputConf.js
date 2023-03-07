@@ -3,6 +3,7 @@ import { VFJInputConfigBase } from '../VFJInputConfigBase'
 
 export class VFJTextInputConf extends VFJInputConfigBase {
     type = 'text'
+    params = {}
 
     constructor( params ){
         super (params)

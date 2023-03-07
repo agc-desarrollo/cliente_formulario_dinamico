@@ -2,7 +2,7 @@ import { ref, onMounted } from 'vue'
 
 export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const model  = ref()
-    const config = ref(new CONFIG_CLASS(props.params))
+    const config = ref(props.params)
     
     function input_event(){
         emit('update:modelValue', { config: config.value, data: model.value })
@@ -15,7 +15,8 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     onMounted(async ()=>{
         if (props.modelValue != undefined && config.value.field_options != undefined) {
             let data = props.modelValue.field_options 
-            optionals.field_options.value = data[ config.value.field_options ]
+            if (data != undefined)
+                optionals.field_options.value = data[ config.value.field_options ]
         }
         
         if (props.modelValue !== undefined && props.modelValue.getValue !== undefined) {
