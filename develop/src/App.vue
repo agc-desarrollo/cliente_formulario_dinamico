@@ -13,7 +13,7 @@ import { useRoute } from 'vue-router'
 
 const route  = useRoute()
 
-const model   = ref({  'name': 'Juan Perez', 'categoria': 4, 'radio_ej': 2, 'checkbox_ej': [1,4] })
+const model   = ref({})
 const conf    = ref( null )
 
 onMounted(async ()=>{
