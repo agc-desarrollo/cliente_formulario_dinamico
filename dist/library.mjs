@@ -942,6 +942,7 @@ return (_ctx, _cache) => {
   return (openBlock(), createElementBlock("div", {
     class: normalizeClass(unref(config).class)
   }, [
+    createTextVNode(toDisplayString(unref(config)) + " ", 1 /* TEXT */),
     createElementVNode("label", {
       for: unref(config).key,
       class: "form-label"
@@ -949,8 +950,8 @@ return (_ctx, _cache) => {
     createElementVNode("div", _hoisted_2$2, [
       withDirectives(createVNode(_component_InputNumber, {
         disabled: unref(config).disabled,
-        min: unref(config).min,
-        max: unref(config).max,
+        min: Number(unref(config).min),
+        max: Number(unref(config).max),
         step: unref(config).step,
         format: unref(config).format,
         minFractionDigits: unref(config).minFractionDigits,
@@ -1250,13 +1251,13 @@ class FormStorage {
             let is_new = true;
             for (let c=0; c < this.data_form[ p.list ].length; c++)
                 if (this.data_form[ p.list ][ c ]?.[ '_i' ] == Number(p.id)) {
-                    this.data_form[ p.list ][ c ][ p.field ] = evnt.data;
+                    this.data_form[ p.list ][ c ][ p.key ] = evnt.data;
                     is_new = false;
                     break;
                 }
 
             if (is_new){
-                this.data_form[ p.list ][ Number(p.id) ][ p.field ] = evnt.data;
+                this.data_form[ p.list ][ Number(p.id) ][ p.key ] = evnt.data;
                 this.data_form[ p.list ][ Number(p.id) ][ '_i' ]    = Number(p.id);
             }
             
@@ -1266,7 +1267,7 @@ class FormStorage {
 
             this.data_form[ p.list ] = aux;
         } else 
-            this.data_form[ p.field ] = evnt.data;
+            this.data_form[ p.key ] = evnt.data;
     }
 
     delete( evnt ){

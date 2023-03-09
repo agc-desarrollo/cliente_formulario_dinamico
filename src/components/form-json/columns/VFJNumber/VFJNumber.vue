@@ -4,7 +4,7 @@
         <div class="input-group">
             <InputNumber 
                 v-tooltip="config.tooltip"
-                :disabled="config.disabled" :min="config.min" :max="config.max" :step="config.step" :format="config.format"
+                :disabled="config.disabled" :min="Number(config.min)" :max="Number(config.max)" :step="config.step" :format="config.format"
                 :minFractionDigits="config.minFractionDigits" :maxFractionDigits="config.maxFractionDigits"
                 :currency="config.currency" :mode="config.mode" :suffix="config.suffix" :prefix="config.prefix"
                 :showButtons="config.showButtons" :placeholder="config.placeholder"

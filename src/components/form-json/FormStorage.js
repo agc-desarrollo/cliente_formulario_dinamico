@@ -18,13 +18,13 @@ export class FormStorage {
             let is_new = true
             for (let c=0; c < this.data_form[ p.list ].length; c++)
                 if (this.data_form[ p.list ][ c ]?.[ '_i' ] == Number(p.id)) {
-                    this.data_form[ p.list ][ c ][ p.field ] = evnt.data
+                    this.data_form[ p.list ][ c ][ p.key ] = evnt.data
                     is_new = false
                     break;
                 }
 
             if (is_new){
-                this.data_form[ p.list ][ Number(p.id) ][ p.field ] = evnt.data
+                this.data_form[ p.list ][ Number(p.id) ][ p.key ] = evnt.data
                 this.data_form[ p.list ][ Number(p.id) ][ '_i' ]    = Number(p.id)
             }
             
@@ -34,7 +34,7 @@ export class FormStorage {
 
             this.data_form[ p.list ] = aux
         } else 
-            this.data_form[ p.field ] = evnt.data
+            this.data_form[ p.key ] = evnt.data
     }
 
     delete( evnt ){

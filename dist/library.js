@@ -966,6 +966,7 @@ return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock("div", {
     class: vue.normalizeClass(vue.unref(config).class)
   }, [
+    vue.createTextVNode(vue.toDisplayString(vue.unref(config)) + " ", 1 /* TEXT */),
     vue.createElementVNode("label", {
       for: vue.unref(config).key,
       class: "form-label"
@@ -973,8 +974,8 @@ return (_ctx, _cache) => {
     vue.createElementVNode("div", _hoisted_2$2, [
       vue.withDirectives(vue.createVNode(_component_InputNumber, {
         disabled: vue.unref(config).disabled,
-        min: vue.unref(config).min,
-        max: vue.unref(config).max,
+        min: Number(vue.unref(config).min),
+        max: Number(vue.unref(config).max),
         step: vue.unref(config).step,
         format: vue.unref(config).format,
         minFractionDigits: vue.unref(config).minFractionDigits,
@@ -1274,13 +1275,13 @@ class FormStorage {
             let is_new = true;
             for (let c=0; c < this.data_form[ p.list ].length; c++)
                 if (this.data_form[ p.list ][ c ]?.[ '_i' ] == Number(p.id)) {
-                    this.data_form[ p.list ][ c ][ p.field ] = evnt.data;
+                    this.data_form[ p.list ][ c ][ p.key ] = evnt.data;
                     is_new = false;
                     break;
                 }
 
             if (is_new){
-                this.data_form[ p.list ][ Number(p.id) ][ p.field ] = evnt.data;
+                this.data_form[ p.list ][ Number(p.id) ][ p.key ] = evnt.data;
                 this.data_form[ p.list ][ Number(p.id) ][ '_i' ]    = Number(p.id);
             }
             
@@ -1290,7 +1291,7 @@ class FormStorage {
 
             this.data_form[ p.list ] = aux;
         } else 
-            this.data_form[ p.field ] = evnt.data;
+            this.data_form[ p.key ] = evnt.data;
     }
 
     delete( evnt ){
