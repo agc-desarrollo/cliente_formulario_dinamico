@@ -21,7 +21,7 @@ export function getSession( urlAPI, data ) {
 export function putClientData( urlAPI, data ) {
   const request = create(urlAPI)
   return request({
-    url: '/form/client_data',
+    url: '/form/form_data',
     method: 'put',
     data: data
   })

@@ -1,11 +1,11 @@
 <template>
-    Cliente Formulario Dinámico
-
     <FormularioJSON v-if="form_def !== null"
                     :form_definition="form_def" v-model="form_data" @update:modelValue="update_model"
                     @submit="submitRepeat" @input="inputRepeat" @click="clickRepeat"/>
     {{ form_data }}
-
+  <div class="row"><!-- TODO: Agregar v-if-->
+    Formulario inexistente
+  </div>
 </template>
 
 <script setup>
