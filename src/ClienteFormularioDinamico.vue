@@ -1,8 +1,7 @@
 <template>
     <FormularioJSON v-if="form_def !== null"
-                    :form_definition="form_def" v-model="form_data" @update:modelValue="update_model"
+                    :form_definition="form_def" v-model="form_storage" @update:modelValue="update_model"
                     @submit="submitRepeat" @input="inputRepeat" @click="clickRepeat"/>
-    {{ form_data }}
   <div class="row"><!-- TODO: Agregar v-if-->
     Formulario inexistente
   </div>
@@ -11,14 +10,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getSession, getForm, putClientData } from './api/form'
+import { FormStorage } from './components/form-json/FormStorage'
 
 const props = defineProps(['config', 'modelValue'])
 const emit  = defineEmits(['update:modelValue', 'input', 'submit', 'click' ])
 
-const form_data = ref( props.modelValue )
+const form_storage = ref( new FormStorage() )
 const form_def  = ref( null )
-
-const session_res = ref( null )
 
 //REENVIO EVENTOS
 function update_model( evnt ){ syncData(evnt); emit( 'update:modelValue', evnt ) }
@@ -38,6 +36,8 @@ async function callGetForm(){
   let res = await getForm(props.config.api, props.config.id)
   if (res.stat) {
     form_def.value = res.definition
+    form_storage.value.data_form = res.form_data
+    console.log()
   } else {
     alert(res.text)
   }

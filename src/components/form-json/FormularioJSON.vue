@@ -16,7 +16,7 @@ const props = defineProps(['form_definition', 'modelValue'])
 
 const emit = defineEmits(['update:modelValue', 'submit', 'input'])
 
-const model = ref(new FormStorage())
+const model = ref(props.modelValue)
 
 const formConfig  = ref(new FormConfig())
 const formStorage = ref(new FormStorage())
@@ -36,15 +36,16 @@ function update_model( evnt ){
 }
 
 async function click( evnt ){
-    emit( 'click', evnt.data )
+    //emit( 'click', evnt.data )
 
     if (evnt.config != undefined && BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
         await BTN_ACTION_INDEX[ evnt.config.action ]( evnt )
 }
 
 onMounted(async ()=>{
-    formConfig.value = props.form_definition
-    model.value.data_form      = props.modelValue ? props.modelValue : {} 
+    formConfig.value           = props.form_definition
+    formStorage.value.data_form = props.modelValue.data_form
+    model.value.data_form = props.modelValue.data_form
     model.value.field_options  = formConfig.value.gral.field_options
     model.value.initial_values = formConfig.value.gral.initial_values
 })
