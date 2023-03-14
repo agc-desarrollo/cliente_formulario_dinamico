@@ -17,3 +17,12 @@ export function getSession( urlAPI, data ) {
     data: data
   })
 }
+
+export function putClientData( urlAPI, data ) {
+  const request = create(urlAPI)
+  return request({
+    url: '/form/form_data',
+    method: 'put',
+    data: data
+  })
+}
