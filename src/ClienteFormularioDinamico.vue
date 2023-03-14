@@ -1,16 +1,20 @@
 <template>
-    <FormularioJSON v-if="form_def !== null"
+  
+  <SignUp v-if="step == 0" :config="config" @hasSession="hasSession"/>
+
+  <FormularioJSON v-if="step == 1 && form_def !== null"
                     :form_definition="form_def" v-model="form_storage" @update:modelValue="update_model"
                     @submit="submitRepeat" @input="inputRepeat" @click="clickRepeat"/>
-  <div class="row"><!-- TODO: Agregar v-if-->
-    Formulario inexistente
-  </div>
+
+  <FormNotFound v-if="step == 1 &&  form_def == null" />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getSession, getForm, putClientData } from './api/form'
+import { ref } from 'vue'
+import { getForm, putClientData } from './api/form'
 import { FormStorage } from './components/form-json/FormStorage'
+import  SignUp        from './components/SignUp.vue'
+import  FormNotFound  from './components/FormNotFound.vue'
 
 const props = defineProps(['config', 'modelValue'])
 const emit  = defineEmits(['update:modelValue', 'input', 'submit', 'click' ])
@@ -18,11 +22,17 @@ const emit  = defineEmits(['update:modelValue', 'input', 'submit', 'click' ])
 const form_storage = ref( new FormStorage() )
 const form_def  = ref( null )
 
+const step = ref(0)
+
 //REENVIO EVENTOS
 function update_model( evnt ){ syncData(evnt); emit( 'update:modelValue', evnt ) }
 function inputRepeat( event ){  emit('input', event) }
 function submitRepeat( event ){ emit('submit' ,event) }
 function clickRepeat( event ){ emit('click' ,event) }
+
+async function hasSession(){
+  await callGetForm()
+}
 
 async function syncData( evnt ){
   //TODO: Aplicar debounce
@@ -37,19 +47,8 @@ async function callGetForm(){
   if (res.stat) {
     form_def.value = res.definition
     form_storage.value.data_form = res.form_data
-    console.log()
-  } else {
-    alert(res.text)
+    step.value = 1
   }
 }
 
-onMounted(async ()=>{
-  let res = await getSession(props.config.api)
-
-  if (res.stat) {
-    await callGetForm()
-  } else {
-    alert(res.text)
-  }
-})
 </script>

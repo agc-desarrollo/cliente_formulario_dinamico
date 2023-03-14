@@ -14,7 +14,7 @@ import { FormStorage } from './FormStorage'
 
 const props = defineProps(['form_definition', 'modelValue'])
 
-const emit = defineEmits(['update:modelValue', 'submit', 'input'])
+const emit = defineEmits(['update:modelValue', 'submit', 'input', 'click'])
 
 const model = ref(props.modelValue)
 
@@ -36,7 +36,7 @@ function update_model( evnt ){
 }
 
 async function click( evnt ){
-    //emit( 'click', evnt.data )
+    emit( 'click', evnt.data )
 
     if (evnt.config != undefined && BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
         await BTN_ACTION_INDEX[ evnt.config.action ]( evnt )
