@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 
 export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const model  = ref()
@@ -32,4 +32,20 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     })
 
     return { input_event, click_event, model, config }
+}
+
+export function useSelectCommon( props ){
+    const dataOrigins   = inject('dataOrigins')
+    const field_options = ref([])
+
+    async function getFieldOptions(){
+        let data = await dataOrigins.getData( props.params.origin )
+        return data
+    }
+
+    onMounted(async ()=>{
+        field_options.value = await getFieldOptions()
+    })
+
+    return { field_options, dataOrigins }
 }
