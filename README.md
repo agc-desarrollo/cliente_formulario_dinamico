@@ -1,6 +1,7 @@
 # Vue3 Cliente Formulario Dinámico
 
 # Change Log
+- **0.1.6**: Los campos del formulario toman los datos cargados en el mismo
 - **0.1.5**: Se realiza consulta de información de formulario
 - **0.1.4**:  Se agrega tipo de control input numerico diferenciado del control de texto; Se agrega posibilidad de configurar placeholder;
 Las opciones de configuración de los controles ahora se definen en composable; Se arreglan bug de loop de campos que no generaba correctamente la estructura de datos, si se eliminaban registros; Se mejora generación de estructura HTML

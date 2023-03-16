@@ -33,8 +33,11 @@ export class FormStorage {
                 if (this.data_form[ p.list ][c] != undefined && this.data_form[ p.list ][c] != null ) aux.push(this.data_form[ p.list ][c])
 
             this.data_form[ p.list ] = aux
-        } else 
+        } else {
+            if (this.data_form == undefined)
+                this.data_form = {}
             this.data_form[ p.key ] = evnt.data
+        }
     }
 
     delete( evnt ){

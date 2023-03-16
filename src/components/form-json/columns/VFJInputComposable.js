@@ -13,6 +13,10 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     }
 
     onMounted(async ()=>{
+        console.log(props.modelValue, config.value.key)
+        if (config.value.key != undefined && props.modelValue.data_form != undefined && props.modelValue.data_form[config.value.key] != undefined)
+            model.value = props.modelValue.data_form[config.value.key]
+
         if (props.modelValue != undefined && config.value.field_options != undefined) {
             let data = props.modelValue.field_options 
             if (data != undefined)

@@ -1,4 +1,4 @@
-import { ref, onMounted, resolveComponent, openBlock, createElementBlock, Fragment, createTextVNode, createBlock, createCommentVNode, toDisplayString, resolveDirective, withDirectives, unref, normalizeClass, createElementVNode, renderList, createVNode, isRef, withCtx, resolveDynamicComponent } from 'vue';
+import { ref, onMounted, resolveComponent, openBlock, createElementBlock, Fragment, createBlock, createCommentVNode, createElementVNode, createTextVNode, resolveDirective, withDirectives, unref, normalizeClass, toDisplayString, renderList, createVNode, isRef, withCtx, resolveDynamicComponent } from 'vue';
 import axios from 'axios';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
@@ -100,6 +100,82 @@ function getSession( urlAPI, data ) {
   })
 }
 
+function putClientData( urlAPI, data ) {
+  const request = create(urlAPI);
+  return request({
+    url: '/form/form_data',
+    method: 'put',
+    data: data
+  })
+}
+
+class FormStorage {
+
+    data_form      = {}
+    field_options  = {}
+    initial_values = {}
+
+    update( evnt ){
+        let p = evnt.config;
+        console.log(987979,evnt);
+        if ( p.list != undefined && p.list != null ){
+            if (this.data_form[ p.list ] == undefined) 
+                this.data_form[ p.list ] = [];
+            
+            if (this.data_form[ p.list ][ Number(p.id) ] == undefined)
+                this.data_form[ p.list ][ Number(p.id) ] = {};
+            
+            let is_new = true;
+            for (let c=0; c < this.data_form[ p.list ].length; c++)
+                if (this.data_form[ p.list ][ c ]?.[ '_i' ] == Number(p.id)) {
+                    this.data_form[ p.list ][ c ][ p.key ] = evnt.data;
+                    is_new = false;
+                    break;
+                }
+
+            if (is_new){
+                this.data_form[ p.list ][ Number(p.id) ][ p.key ] = evnt.data;
+                this.data_form[ p.list ][ Number(p.id) ][ '_i' ]    = Number(p.id);
+            }
+            
+            let aux = [];
+            for (let c = 0; c < this.data_form[ p.list ].length; c++)
+                if (this.data_form[ p.list ][c] != undefined && this.data_form[ p.list ][c] != null ) aux.push(this.data_form[ p.list ][c]);
+
+            this.data_form[ p.list ] = aux;
+        } else 
+            this.data_form[ p.key ] = evnt.data;
+    }
+
+    delete( evnt ){
+        if (this.data_form[evnt.list] == undefined)
+            return false
+
+        let aux = [];
+        for (let c=0; c < this.data_form[evnt.list].length; c++)
+            if (this.data_form[evnt.list][c]._i != evnt.id)
+                aux.push( this.data_form[evnt.list][c] );
+        
+        this.data_form[evnt.list] = aux;
+        return true
+    }
+
+    getValue( id_field ){
+        if (this.data_form != undefined)
+            return this.data_form[ id_field ]
+    }
+
+    deleteField( id_field ){
+        delete this.data_form[id_field];
+    }
+}
+
+const _hoisted_1$e = /*#__PURE__*/createElementVNode("div", { class: "row" }, [
+  /*#__PURE__*/createCommentVNode(" TODO: Agregar v-if"),
+  /*#__PURE__*/createTextVNode(" Formulario inexistente ")
+], -1 /* HOISTED */);
+
+
 var script$j = {
   __name: 'ClienteFormularioDinamico',
   props: ['config', 'modelValue'],
@@ -111,22 +187,29 @@ const props = __props;
 
 
 
-const form_data = ref( props.modelValue );
+const form_storage = ref( new FormStorage() );
 const form_def  = ref( null );
 
-ref( null );
-
 //REENVIO EVENTOS
-function update_model( evnt ){  emit( 'update:modelValue', evnt ); }
-function inputRepeat( event ){ emit('input', event); }
+function update_model( evnt ){ syncData(evnt); emit( 'update:modelValue', evnt ); }
+function inputRepeat( event ){  emit('input', event); }
 function submitRepeat( event ){ emit('submit' ,event); }
 function clickRepeat( event ){ emit('click' ,event); }
 
+async function syncData( evnt ){
+  //TODO: Aplicar debounce
+  let res = await putClientData(props.config.api, evnt.data_form );
+  if (res) {
+    console.log('putClientData', res );
+  }
+}
 
 async function callGetForm(){
   let res = await getForm(props.config.api, props.config.id);
   if (res.stat) {
     form_def.value = res.definition;
+    form_storage.value.data_form = res.form_data;
+    console.log();
   } else {
     alert(res.text);
   }
@@ -146,14 +229,13 @@ return (_ctx, _cache) => {
   const _component_FormularioJSON = resolveComponent("FormularioJSON");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    createTextVNode(" Cliente Formulario Dinámico "),
     (form_def.value !== null)
       ? (openBlock(), createBlock(_component_FormularioJSON, {
           key: 0,
           form_definition: form_def.value,
-          modelValue: form_data.value,
+          modelValue: form_storage.value,
           "onUpdate:modelValue": [
-            _cache[0] || (_cache[0] = $event => ((form_data).value = $event)),
+            _cache[0] || (_cache[0] = $event => ((form_storage).value = $event)),
             update_model
           ],
           onSubmit: submitRepeat,
@@ -161,7 +243,7 @@ return (_ctx, _cache) => {
           onClick: clickRepeat
         }, null, 8 /* PROPS */, ["form_definition", "modelValue"]))
       : createCommentVNode("v-if", true),
-    createTextVNode(" " + toDisplayString(form_data.value), 1 /* TEXT */)
+    _hoisted_1$e
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -183,6 +265,10 @@ function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     }
 
     onMounted(async ()=>{
+        console.log(props.modelValue, config.value.key);
+        if (config.value.key != undefined && props.modelValue?.data_form[config.value.key] != undefined)
+            model.value = props.modelValue.data_form[config.value.key];
+
         if (props.modelValue != undefined && config.value.field_options != undefined) {
             let data = props.modelValue.field_options; 
             if (data != undefined)
@@ -942,7 +1028,6 @@ return (_ctx, _cache) => {
   return (openBlock(), createElementBlock("div", {
     class: normalizeClass(unref(config).class)
   }, [
-    createTextVNode(toDisplayString(unref(config)) + " ", 1 /* TEXT */),
     createElementVNode("label", {
       for: unref(config).key,
       class: "form-label"
@@ -1232,67 +1317,6 @@ return (_ctx, _cache) => {
 
 script$3.__file = "src/components/form-json/layout/VFJLoopFieldGroup/VFJLoopFieldGroupRow.vue";
 
-class FormStorage {
-
-    data_form      = {}
-    field_options  = {}
-    initial_values = {}
-
-    update( evnt ){
-        let p = evnt.config;
-        console.log(987979,evnt);
-        if ( p.list != undefined && p.list != null ){
-            if (this.data_form[ p.list ] == undefined) 
-                this.data_form[ p.list ] = [];
-            
-            if (this.data_form[ p.list ][ Number(p.id) ] == undefined)
-                this.data_form[ p.list ][ Number(p.id) ] = {};
-            
-            let is_new = true;
-            for (let c=0; c < this.data_form[ p.list ].length; c++)
-                if (this.data_form[ p.list ][ c ]?.[ '_i' ] == Number(p.id)) {
-                    this.data_form[ p.list ][ c ][ p.key ] = evnt.data;
-                    is_new = false;
-                    break;
-                }
-
-            if (is_new){
-                this.data_form[ p.list ][ Number(p.id) ][ p.key ] = evnt.data;
-                this.data_form[ p.list ][ Number(p.id) ][ '_i' ]    = Number(p.id);
-            }
-            
-            let aux = [];
-            for (let c = 0; c < this.data_form[ p.list ].length; c++)
-                if (this.data_form[ p.list ][c] != undefined && this.data_form[ p.list ][c] != null ) aux.push(this.data_form[ p.list ][c]);
-
-            this.data_form[ p.list ] = aux;
-        } else 
-            this.data_form[ p.key ] = evnt.data;
-    }
-
-    delete( evnt ){
-        if (this.data_form[evnt.list] == undefined)
-            return false
-
-        let aux = [];
-        for (let c=0; c < this.data_form[evnt.list].length; c++)
-            if (this.data_form[evnt.list][c]._i != evnt.id)
-                aux.push( this.data_form[evnt.list][c] );
-        
-        this.data_form[evnt.list] = aux;
-        return true
-    }
-
-    getValue( id_field ){
-        if (this.data_form != undefined)
-            return this.data_form[ id_field ]
-    }
-
-    deleteField( id_field ){
-        delete this.data_form[id_field];
-    }
-}
-
 const _hoisted_1 = { class: "col" };
 
 
@@ -1449,7 +1473,7 @@ const props = __props;
 
 
 
-const model = ref(new FormStorage());
+const model = ref(props.modelValue);
 
 const formConfig  = ref(new FormConfig());
 const formStorage = ref(new FormStorage());
@@ -1469,15 +1493,16 @@ function update_model( evnt ){
 }
 
 async function click( evnt ){
-    emit( 'click', evnt.data );
+    //emit( 'click', evnt.data )
 
     if (evnt.config != undefined && BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
         await BTN_ACTION_INDEX[ evnt.config.action ]( evnt );
 }
 
 onMounted(async ()=>{
-    formConfig.value = props.form_definition;
-    model.value.data_form      = props.modelValue ? props.modelValue : {}; 
+    formConfig.value           = props.form_definition;
+    formStorage.value.data_form = props.modelValue.data_form;
+    model.value.data_form = props.modelValue.data_form;
     model.value.field_options  = formConfig.value.gral.field_options;
     model.value.initial_values = formConfig.value.gral.initial_values;
 });
