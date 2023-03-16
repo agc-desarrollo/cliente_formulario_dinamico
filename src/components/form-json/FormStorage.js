@@ -5,6 +5,10 @@ export class FormStorage {
     field_options  = {}
     initial_values = {}
 
+    constructor( params = {}){
+        this.data_form = params.data_form ? params.data_form : {} 
+    }
+
     update( evnt ){
         let p = evnt.config
         console.log(987979,evnt)

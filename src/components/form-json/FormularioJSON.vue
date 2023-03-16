@@ -1,4 +1,4 @@
-<template>
+<template>{{ COMPONENTS_REFS[ formConfig.sections.component ] }} {{ formConfig.sections.component }}
     <component 
         :is="COMPONENTS_REFS[ formConfig.sections.component ]" 
         :params="formConfig.sections.content"
@@ -18,8 +18,8 @@ const emit = defineEmits(['update:modelValue', 'submit', 'input', 'click'])
 
 const model = ref(props.modelValue)
 
-const formConfig  = ref(new FormConfig())
-const formStorage = ref(new FormStorage())
+const formConfig  = ref(props.form_definition)
+const formStorage = ref(new FormStorage(model.value))
 
 const BTN_ACTION_INDEX = {
     'submit' : submit_form
@@ -42,11 +42,4 @@ async function click( evnt ){
         await BTN_ACTION_INDEX[ evnt.config.action ]( evnt )
 }
 
-onMounted(async ()=>{
-    formConfig.value           = props.form_definition
-    formStorage.value.data_form = props.modelValue.data_form
-    model.value.data_form = props.modelValue.data_form
-    model.value.field_options  = formConfig.value.gral.field_options
-    model.value.initial_values = formConfig.value.gral.initial_values
-})
 </script>
