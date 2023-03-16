@@ -1,4 +1,4 @@
-import { ref, onMounted, resolveComponent, openBlock, createElementBlock, Fragment, createBlock, createCommentVNode, createElementVNode, createTextVNode, resolveDirective, withDirectives, unref, normalizeClass, toDisplayString, renderList, createVNode, isRef, withCtx, resolveDynamicComponent } from 'vue';
+import { ref, onMounted, resolveComponent, openBlock, createBlock, createCommentVNode, createElementBlock, Fragment, inject, resolveDirective, withDirectives, unref, normalizeClass, createElementVNode, toDisplayString, renderList, createVNode, isRef, withCtx, provide, resolveDynamicComponent } from 'vue';
 import axios from 'axios';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
@@ -109,11 +109,47 @@ function putClientData( urlAPI, data ) {
   })
 }
 
+class DataOrigin{
+    origins_def = {}
+    origins_data = {}
+    
+    constructor( data_origins ){console.log(2342343,data_origins);
+        this.origins_def = this.parse_data_origin(data_origins);
+    }
+
+    parse_data_origin( input ){
+        if (input == undefined) return {}
+        let aux = {};
+        for (let c=0; c < input.length; c++)
+            aux[input[c].alias] = input[c];
+        return aux
+    }
+
+    async getData( key ){
+        console.log(key, this.origins_def);
+        if (this.origins_def[key] == undefined) return undefined
+        if (this.origins_data[key] != undefined) return this.origins_data[key]
+
+        let resp = await axios.get(this.origins_def[key].url);
+        if (resp.status == 200){
+            this.origins_data[key] = resp.data;
+            return resp.data
+        } else {
+            console.log('Error!! data not found');
+            return undefined;
+        }
+    }
+}
+
 class FormStorage {
 
     data_form      = {}
     field_options  = {}
     initial_values = {}
+
+    constructor( params = {}){
+        this.data_form = params.data_form ? params.data_form : {}; 
+    }
 
     update( evnt ){
         let p = evnt.config;
@@ -143,8 +179,11 @@ class FormStorage {
                 if (this.data_form[ p.list ][c] != undefined && this.data_form[ p.list ][c] != null ) aux.push(this.data_form[ p.list ][c]);
 
             this.data_form[ p.list ] = aux;
-        } else 
+        } else {
+            if (this.data_form == undefined)
+                this.data_form = {};
             this.data_form[ p.key ] = evnt.data;
+        }
     }
 
     delete( evnt ){
@@ -170,13 +209,118 @@ class FormStorage {
     }
 }
 
-const _hoisted_1$e = /*#__PURE__*/createElementVNode("div", { class: "row" }, [
-  /*#__PURE__*/createCommentVNode(" TODO: Agregar v-if"),
-  /*#__PURE__*/createTextVNode(" Formulario inexistente ")
-], -1 /* HOISTED */);
+var script$m = {
+  __name: 'SignUp',
+  props: ['config'],
+  emits: ['hasSession' ],
+  setup(__props, { emit }) {
+
+const props = __props;
 
 
-var script$j = {
+
+
+const form_storage = ref( null );
+
+const form_def = ref({
+  gral: {
+    title: "Registro",
+    status: 1
+  },
+  sections: {
+    component: "V_TABS",
+    content: [
+      {
+        header: "Registro",
+        content: [
+          {
+            component: "V_ROW",
+            class: "row",
+            content: [
+              {
+                class: "col",
+                component: "I_TEXT",
+                params: {
+                  label: "CUIL",
+                  class: "col mb-3",
+                  disabled: false,
+                  key: "cuil",
+                  required: true,
+                  autocomplete_options: "",
+                  tooltip: "",
+                  id: "",
+                  placeholder: "",
+                  type: ""
+                },
+                id: 1
+              },
+              {
+                class: "col",
+                component: "I_BUTTON",
+                params: {
+                  action: "submit",
+                  label: "Continuar",
+                  dkey: "",
+                  key: "submit"
+                },
+                id: 0
+              }
+            ]
+          }
+        ],
+        external_ref: 0
+      }
+    ],
+    class: ""
+  }
+});
+
+async function onSubmit( evnt ){
+  let res = await getSession(props.config.api, { cuil: evnt.cuil  });
+
+  if (res.stat) {
+    emit('hasSession', true);
+  } 
+}
+
+onMounted(async ()=>{
+  form_storage.value = new FormStorage();
+  form_storage.value.data_form = { cuil: '' };
+});
+
+
+return (_ctx, _cache) => {
+  const _component_FormularioJSON = resolveComponent("FormularioJSON");
+
+  return (form_storage.value !== null)
+    ? (openBlock(), createBlock(_component_FormularioJSON, {
+        key: 0,
+        form_definition: form_def.value,
+        modelValue: form_storage.value,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((form_storage).value = $event)),
+        onSubmit: onSubmit
+      }, null, 8 /* PROPS */, ["form_definition", "modelValue"]))
+    : createCommentVNode("v-if", true)
+}
+}
+
+};
+
+script$m.__file = "src/components/SignUp.vue";
+
+const _hoisted_1$e = { class: "row" };
+
+function render(_ctx, _cache) {
+  return (openBlock(), createElementBlock("div", _hoisted_1$e, " Formulario inexistente "))
+}
+
+const script$l = {};
+
+
+script$l.render = render;
+script$l.__file = "src/components/FormNotFound.vue";
+
+var script$k = {
   __name: 'ClienteFormularioDinamico',
   props: ['config', 'modelValue'],
   emits: ['update:modelValue', 'input', 'submit', 'click' ],
@@ -190,11 +334,17 @@ const props = __props;
 const form_storage = ref( new FormStorage() );
 const form_def  = ref( null );
 
+const step = ref(0);
+
 //REENVIO EVENTOS
 function update_model( evnt ){ syncData(evnt); emit( 'update:modelValue', evnt ); }
 function inputRepeat( event ){  emit('input', event); }
 function submitRepeat( event ){ emit('submit' ,event); }
 function clickRepeat( event ){ emit('click' ,event); }
+
+async function hasSession(){
+  await callGetForm();
+}
 
 async function syncData( evnt ){
   //TODO: Aplicar debounce
@@ -209,29 +359,25 @@ async function callGetForm(){
   if (res.stat) {
     form_def.value = res.definition;
     form_storage.value.data_form = res.form_data;
-    console.log();
-  } else {
-    alert(res.text);
+    step.value = 1;
   }
 }
 
-onMounted(async ()=>{
-  let res = await getSession(props.config.api);
-
-  if (res.stat) {
-    await callGetForm();
-  } else {
-    alert(res.text);
-  }
-});
 
 return (_ctx, _cache) => {
   const _component_FormularioJSON = resolveComponent("FormularioJSON");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    (form_def.value !== null)
-      ? (openBlock(), createBlock(_component_FormularioJSON, {
+    (step.value == 0)
+      ? (openBlock(), createBlock(script$m, {
           key: 0,
+          config: __props.config,
+          onHasSession: hasSession
+        }, null, 8 /* PROPS */, ["config"]))
+      : createCommentVNode("v-if", true),
+    (step.value == 1 && form_def.value !== null)
+      ? (openBlock(), createBlock(_component_FormularioJSON, {
+          key: 1,
           form_definition: form_def.value,
           modelValue: form_storage.value,
           "onUpdate:modelValue": [
@@ -243,14 +389,16 @@ return (_ctx, _cache) => {
           onClick: clickRepeat
         }, null, 8 /* PROPS */, ["form_definition", "modelValue"]))
       : createCommentVNode("v-if", true),
-    _hoisted_1$e
+    (step.value == 1 &&  form_def.value == null)
+      ? (openBlock(), createBlock(script$l, { key: 2 }))
+      : createCommentVNode("v-if", true)
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
 
 };
 
-script$j.__file = "src/ClienteFormularioDinamico.vue";
+script$k.__file = "src/ClienteFormularioDinamico.vue";
 
 function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const model  = ref();
@@ -266,7 +414,7 @@ function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
 
     onMounted(async ()=>{
         console.log(props.modelValue, config.value.key);
-        if (config.value.key != undefined && props.modelValue?.data_form[config.value.key] != undefined)
+        if (config.value.key != undefined && props.modelValue.data_form != undefined && props.modelValue.data_form[config.value.key] != undefined)
             model.value = props.modelValue.data_form[config.value.key];
 
         if (props.modelValue != undefined && config.value.field_options != undefined) {
@@ -284,6 +432,22 @@ function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     });
 
     return { input_event, click_event, model, config }
+}
+
+function useSelectCommon( props ){
+    const dataOrigins   = inject('dataOrigins');
+    const field_options = ref([]);
+
+    async function getFieldOptions(){
+        let data = await dataOrigins.getData( props.params.origin );
+        return data
+    }
+
+    onMounted(async ()=>{
+        field_options.value = await getFieldOptions();
+    });
+
+    return { field_options, dataOrigins }
 }
 
 class VFJInputConfigBase {
@@ -322,7 +486,7 @@ class VFJButtonInputConf extends VFJInputConfigBase {
     }
 }
 
-var script$i = {
+var script$j = {
   __name: 'VFJButtonInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -354,7 +518,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$i.__file = "src/components/form-json/columns/VFJButtonInput/VFJButtonInput.vue";
+script$j.__file = "src/components/form-json/columns/VFJButtonInput/VFJButtonInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJCheckboxInput
 class VFJCheckboxInputConf extends VFJInputConfigBase{
@@ -376,7 +540,7 @@ const _hoisted_2$b = { class: "input-group row" };
 const _hoisted_3$2 = { for: "{{ config.field + option[config.option_id] }}" };
 
 
-var script$h = {
+var script$i = {
   __name: 'VFJCheckboxInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -387,8 +551,7 @@ const props = __props;
 
 
 
-const field_options = ref([]);
-
+const { field_options } = useSelectCommon( props );
 const { input_event, click_event, model, config } = useInputCommon( emit, VFJCheckboxInputConf, props, { field_options:field_options });
 
 return (_ctx, _cache) => {
@@ -402,7 +565,7 @@ return (_ctx, _cache) => {
       class: "form-label"
     }, toDisplayString(unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$d),
     createElementVNode("div", _hoisted_2$b, [
-      (openBlock(true), createElementBlock(Fragment, null, renderList(field_options.value, (option) => {
+      (openBlock(true), createElementBlock(Fragment, null, renderList(unref(field_options), (option) => {
         return (openBlock(), createElementBlock("div", {
           class: "field-radiobutton col-12",
           key: option
@@ -426,7 +589,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$h.__file = "src/components/form-json/columns/VFJCheckboxInput/VFJCheckboxInput.vue";
+script$i.__file = "src/components/form-json/columns/VFJCheckboxInput/VFJCheckboxInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJColorInput
 class VFJColorInputConf extends VFJInputConfigBase{
@@ -445,7 +608,7 @@ const _hoisted_1$c = ["for"];
 const _hoisted_2$a = { class: "input-group" };
 
 
-var script$g = {
+var script$h = {
   __name: 'VFJColorInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -486,7 +649,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$g.__file = "src/components/form-json/columns/VFJColorInput/VFJColorInput.vue";
+script$h.__file = "src/components/form-json/columns/VFJColorInput/VFJColorInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJDateInput
 class VFJDateInputConf extends VFJInputConfigBase {
@@ -509,7 +672,7 @@ const _hoisted_1$b = ["for"];
 const _hoisted_2$9 = { class: "input-group" };
 
 
-var script$f = {
+var script$g = {
   __name: 'VFJDateInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -557,13 +720,13 @@ return (_ctx, _cache) => {
 
 };
 
-script$f.__file = "src/components/form-json/columns/VFJDateInput/VFJDateInput.vue";
+script$g.__file = "src/components/form-json/columns/VFJDateInput/VFJDateInput.vue";
 
 const _hoisted_1$a = ["for"];
 const _hoisted_2$8 = { class: "input-group" };
 
 
-var script$e = {
+var script$f = {
   __name: 'VFJFileInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue'],
@@ -599,9 +762,9 @@ return (_ctx, _cache) => {
 
 };
 
-script$e.__file = "src/components/form-json/columns/VFJFileInput/VFJFileInput.vue";
+script$f.__file = "src/components/form-json/columns/VFJFileInput/VFJFileInput.vue";
 
-var script$d = {
+var script$e = {
   __name: 'VFJImage',
   props: ['params'],
   setup(__props) {
@@ -620,7 +783,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$d.__file = "src/components/form-json/columns/VFJImage/VFJImage.vue";
+script$e.__file = "src/components/form-json/columns/VFJImage/VFJImage.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJRadioBtnInput
 
@@ -643,7 +806,7 @@ const _hoisted_2$7 = { class: "input-group row" };
 const _hoisted_3$1 = { for: "{{ config.field + option[config.option_id] }}" };
 
 
-var script$c = {
+var script$d = {
   __name: 'VFJRadioBtnInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -653,8 +816,8 @@ const props = __props;
 
 
 
-const field_options = ref([]);
 
+const { field_options } = useSelectCommon( props );
 const { input_event, click_event, model, config } = useInputCommon( emit, VFJRadioBtnInputConf, props, { field_options:field_options });
 
 return (_ctx, _cache) => {
@@ -668,7 +831,7 @@ return (_ctx, _cache) => {
       class: "form-label"
     }, toDisplayString(unref(config).label), 9 /* TEXT, PROPS */, _hoisted_1$9),
     createElementVNode("div", _hoisted_2$7, [
-      (openBlock(true), createElementBlock(Fragment, null, renderList(field_options.value, (option) => {
+      (openBlock(true), createElementBlock(Fragment, null, renderList(unref(field_options), (option) => {
         return (openBlock(), createElementBlock("div", {
           class: "field-radiobutton col-12",
           key: option
@@ -692,7 +855,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$c.__file = "src/components/form-json/columns/VFJRadioBtnInput/VFJRadioBtnInput.vue";
+script$d.__file = "src/components/form-json/columns/VFJRadioBtnInput/VFJRadioBtnInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJRangeInput
 
@@ -715,7 +878,7 @@ const _hoisted_1$8 = ["for"];
 const _hoisted_2$6 = { class: "input-group" };
 
 
-var script$b = {
+var script$c = {
   __name: 'VFJRangeInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -757,7 +920,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$b.__file = "src/components/form-json/columns/VFJRangeInput/VFJRangeInput.vue";
+script$c.__file = "src/components/form-json/columns/VFJRangeInput/VFJRangeInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJSelectInput
 
@@ -779,7 +942,7 @@ const _hoisted_1$7 = ["for"];
 const _hoisted_2$5 = { class: "input-group" };
 
 
-var script$a = {
+var script$b = {
   __name: 'VFJSelectInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -789,7 +952,8 @@ const props = __props;
 
 
 
-const field_options = ref();
+
+const { field_options } = useSelectCommon( props );
 
 const { input_event, click_event, model, config } = useInputCommon( emit, VFJSelectInputConf, props,{ field_options:field_options });
 
@@ -810,7 +974,7 @@ return (_ctx, _cache) => {
         modelValue: unref(model),
         "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (isRef(model) ? (model).value = $event : null)),
         class: "w-100",
-        options: field_options.value,
+        options: unref(field_options),
         optionLabel: unref(config).option_label,
         optionValue: unref(config).option_id,
         onChange: unref(input_event),
@@ -825,12 +989,12 @@ return (_ctx, _cache) => {
 
 };
 
-script$a.__file = "src/components/form-json/columns/VFJSelectInput/VFJSelectInput.vue";
+script$b.__file = "src/components/form-json/columns/VFJSelectInput/VFJSelectInput.vue";
 
 const _hoisted_1$6 = ["innerHTML", "styles"];
 
 
-var script$9 = {
+var script$a = {
   __name: 'VFJText',
   props: ['params'],
   setup(__props) {
@@ -847,7 +1011,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$9.__file = "src/components/form-json/columns/VFJText/VFJText.vue";
+script$a.__file = "src/components/form-json/columns/VFJText/VFJText.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJTextareaInput
 
@@ -868,7 +1032,7 @@ const _hoisted_1$5 = ["for"];
 const _hoisted_2$4 = { class: "input-group" };
 
 
-var script$8 = {
+var script$9 = {
   __name: 'VFJTextareaInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -913,7 +1077,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$8.__file = "src/components/form-json/columns/VFJTextareaInput/VFJTextareaInput.vue";
+script$9.__file = "src/components/form-json/columns/VFJTextareaInput/VFJTextareaInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJTextInputConf
 
@@ -934,7 +1098,7 @@ const _hoisted_1$4 = ["for"];
 const _hoisted_2$3 = { class: "input-group" };
 
 
-var script$7 = {
+var script$8 = {
   __name: 'VFJTextInput',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -977,7 +1141,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$7.__file = "src/components/form-json/columns/VFJTextInput/VFJTextInput.vue";
+script$8.__file = "src/components/form-json/columns/VFJTextInput/VFJTextInput.vue";
 
 //Se usa para definir los parametros inciales de configuración del componente VFJNumber
 
@@ -1008,7 +1172,7 @@ const _hoisted_1$3 = ["for"];
 const _hoisted_2$2 = { class: "input-group" };
 
 
-var script$6 = {
+var script$7 = {
   __name: 'VFJNumber',
   props: ['params', 'modelValue' ],
   emits: ['update:modelValue', 'click'],
@@ -1063,9 +1227,9 @@ return (_ctx, _cache) => {
 
 };
 
-script$6.__file = "src/components/form-json/columns/VFJNumber/VFJNumber.vue";
+script$7.__file = "src/components/form-json/columns/VFJNumber/VFJNumber.vue";
 
-var script$5 = {
+var script$6 = {
   __name: 'VFJTabsSection',
   props: ['params', 'modelValue'],
   emits: ['update:modelValue', 'click'],
@@ -1111,8 +1275,6 @@ const ACTION_INDEX = {
     'section_goTo' : section_goTo
 };
 
-onMounted(async ()=>{
-});
 
 return (_ctx, _cache) => {
   const _component_HTMLTag = resolveComponent("HTMLTag");
@@ -1155,7 +1317,54 @@ return (_ctx, _cache) => {
 
 };
 
-script$5.__file = "src/components/form-json/layout/VFJTabsSection.vue";
+script$6.__file = "src/components/form-json/layout/VFJTabsSection.vue";
+
+var script$5 = {
+  __name: 'VFJSingleSection',
+  props: ['params', 'modelValue'],
+  emits: ['update:modelValue', 'click'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+const model = ref(props.modelValue);
+
+
+ref(0);
+
+function update_model( evnt ){
+    emit('update:modelValue', evnt);
+}
+
+function click( evnt ){
+    emit('click', evnt);
+}
+
+
+return (_ctx, _cache) => {
+  const _component_HTMLTag = resolveComponent("HTMLTag");
+
+  return (openBlock(true), createElementBlock(Fragment, null, renderList(__props.params, (row_data) => {
+    return (openBlock(), createBlock(_component_HTMLTag, {
+      class: normalizeClass(row_data.class),
+      row_data: row_data,
+      key: row_data,
+      modelValue: model.value,
+      "onUpdate:modelValue": [
+        _cache[0] || (_cache[0] = $event => ((model).value = $event)),
+        update_model
+      ],
+      onClick: click
+    }, null, 8 /* PROPS */, ["class", "row_data", "modelValue"]))
+  }), 128 /* KEYED_FRAGMENT */))
+}
+}
+
+};
+
+script$5.__file = "src/components/form-json/layout/VFJSingleSection.vue";
 
 const _hoisted_1$2 = { class: "component-group" };
 const _hoisted_2$1 = { class: "row" };
@@ -1417,54 +1626,30 @@ return (_ctx, _cache) => {
 script$2.__file = "src/components/form-json/layout/VFJLoopFieldGroup/VFJLoopFieldGroup.vue";
 
 const COMPONENTS_REFS = {
-    'I_BUTTON' : script$i,
-    'I_CHECKBOX' : script$h,
-    'I_COLOR' : script$g,
-    'I_DATE' : script$f,
-    'I_FILE' : script$e,
-    '_IMAGE' : script$d,
-    'I_RADIO' : script$c,
-    'I_RANGE' : script$b,
-    'I_SELECT' : script$a,
-    '_TEXT' : script$9,
-    'I_TEXTAREA' : script$8,
-    'I_TEXT' : script$7,
-    'I_NUMBER' : script$6,
+    'I_BUTTON' : script$j,
+    'I_CHECKBOX' : script$i,
+    'I_COLOR' : script$h,
+    'I_DATE' : script$g,
+    'I_FILE' : script$f,
+    '_IMAGE' : script$e,
+    'I_RADIO' : script$d,
+    'I_RANGE' : script$c,
+    'I_SELECT' : script$b,
+    '_TEXT' : script$a,
+    'I_TEXTAREA' : script$9,
+    'I_TEXT' : script$8,
+    'I_NUMBER' : script$7,
 
-    'V_TABS' : script$5,
+    'V_TABS' : script$6,
+    'V_SINGLE' : script$5,
     'V_GROUP' : script$4,
     'V_LOOP' : script$2
 };
 
-const STATUS = {
-    DRAFT: 0,
-    PUBLISHED: 1
-};
-
-class FormConfigGeneralData{
-    status             = STATUS['DRAFT']
-    title              = 'untitled'
-    captcha_public_key = ''
-    field_options      = {}
-    submit_msg         = ''
-}
-
-class FormConfigSections {
-    component = 'VFJTabsSection'
-    content = []
-}
-
-class FormConfig {
-    gral         = new FormConfigGeneralData()
-    sections     = new FormConfigSections()
-    runtime_data = {}
-    field_rels   = []
-}
-
 var script$1 = {
   __name: 'FormularioJSON',
   props: ['form_definition', 'modelValue'],
-  emits: ['update:modelValue', 'submit', 'input'],
+  emits: ['update:modelValue', 'submit', 'input', 'click'],
   setup(__props, { emit }) {
 
 const props = __props;
@@ -1475,8 +1660,11 @@ const props = __props;
 
 const model = ref(props.modelValue);
 
-const formConfig  = ref(new FormConfig());
-const formStorage = ref(new FormStorage());
+const formConfig  = ref(props.form_definition);
+const formStorage = ref(new FormStorage(model.value));
+const dataOrigins = new DataOrigin(props.form_definition.data_origin);
+
+provide('dataOrigins', dataOrigins);
 
 const BTN_ACTION_INDEX = {
     'submit' : submit_form
@@ -1493,19 +1681,12 @@ function update_model( evnt ){
 }
 
 async function click( evnt ){
-    //emit( 'click', evnt.data )
+    emit( 'click', evnt.data );
 
     if (evnt.config != undefined && BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
         await BTN_ACTION_INDEX[ evnt.config.action ]( evnt );
 }
 
-onMounted(async ()=>{
-    formConfig.value           = props.form_definition;
-    formStorage.value.data_form = props.modelValue.data_form;
-    model.value.data_form = props.modelValue.data_form;
-    model.value.field_options  = formConfig.value.gral.field_options;
-    model.value.initial_values = formConfig.value.gral.initial_values;
-});
 
 return (_ctx, _cache) => {
   return (openBlock(), createBlock(resolveDynamicComponent(unref(COMPONENTS_REFS)[ formConfig.value.sections.component ]), {
@@ -1591,7 +1772,7 @@ const VueFormJSON = {
         Vue.component("TabView", TabView);
         Vue.component("TabPanel", TabPanel);
 
-        Vue.component("VFJButtonInput", script$i);
+        Vue.component("VFJButtonInput", script$j);
 
         Vue.component("FormularioJSON", script$1);
         Vue.component("HTMLTag", script);
@@ -1601,7 +1782,7 @@ const VueFormJSON = {
 const VueClienteFormDinamico = {
     install(Vue, options) {
         Vue.use(VueFormJSON);
-        Vue.component("ClienteFormularioDinamico", script$j);
+        Vue.component("ClienteFormularioDinamico", script$k);
     }
 };
 
