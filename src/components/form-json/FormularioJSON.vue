@@ -1,4 +1,4 @@
-<template>{{ COMPONENTS_REFS[ formConfig.sections.component ] }} {{ formConfig.sections.component }}
+<template>
     <component 
         :is="COMPONENTS_REFS[ formConfig.sections.component ]" 
         :params="formConfig.sections.content"
@@ -6,11 +6,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, provide } from 'vue'
 import { COMPONENTS_REFS } from './components'
 
 import { FormConfig } from './FormConfig'
-import { FormStorage } from './FormStorage'
+import { FormStorage, DataOrigin } from './FormStorage'
 
 const props = defineProps(['form_definition', 'modelValue'])
 
@@ -20,6 +20,9 @@ const model = ref(props.modelValue)
 
 const formConfig  = ref(props.form_definition)
 const formStorage = ref(new FormStorage(model.value))
+const dataOrigins = new DataOrigin(props.form_definition.data_origin)
+
+provide('dataOrigins', dataOrigins)
 
 const BTN_ACTION_INDEX = {
     'submit' : submit_form

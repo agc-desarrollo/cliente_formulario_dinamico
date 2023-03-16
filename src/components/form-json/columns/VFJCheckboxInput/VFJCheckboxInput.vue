@@ -17,12 +17,11 @@
 <script setup>
 import { ref } from 'vue'
 import { VFJCheckboxInputConf } from './VFJCheckboxInputConf'
-import { useInputCommon } from '../VFJInputComposable'
+import { useInputCommon, useSelectCommon } from '../VFJInputComposable'
 
 const props = defineProps(['params', 'modelValue'])
 const emit  = defineEmits(['update:modelValue', 'click'])
 
-const field_options = ref([])
-
+const { field_options } = useSelectCommon( props )
 const { input_event, click_event, model, config } = useInputCommon( emit, VFJCheckboxInputConf, props, { field_options:field_options })
 </script>
