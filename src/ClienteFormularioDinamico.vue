@@ -4,14 +4,14 @@
 
   <FormularioJSON v-if="step == 1 && form_def !== null"
                     :form_definition="form_def" v-model="form_storage" @update:modelValue="update_model"
-                    @submit="submitRepeat" @input="inputRepeat" @click="clickRepeat"/>
+                    @submit="submitForm" @input="inputRepeat" @click="clickRepeat"/>
 
   <FormNotFound v-if="step == 1 &&  form_def == null" />
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { getForm, putClientData } from './api/form'
+import { getForm, putClientData, actionSubmit } from './api/form'
 import { FormStorage } from './components/form-json/FormStorage'
 import  SignUp        from './components/SignUp.vue'
 import  FormNotFound  from './components/FormNotFound.vue'
@@ -27,8 +27,17 @@ const step = ref(0)
 //REENVIO EVENTOS
 function update_model( evnt ){ syncData(evnt); emit( 'update:modelValue', evnt ) }
 function inputRepeat( event ){  emit('input', event) }
-function submitRepeat( event ){ emit('submit' ,event) }
 function clickRepeat( event ){ emit('click' ,event) }
+
+async function submitForm( evnt ){
+  let res = await actionSubmit(props.config.api)
+  if (res.stat){
+    emit('submit' ,evnt)
+  } else {
+    console.log('error, submit', res)
+  }
+  
+}
 
 async function hasSession(){
   await callGetForm()

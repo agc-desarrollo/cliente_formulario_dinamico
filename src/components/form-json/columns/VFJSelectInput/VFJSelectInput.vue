@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { VFJSelectInputConf } from './VFJSelectInputConf'
 import { useInputCommon, useSelectCommon } from '../VFJInputComposable'
 
@@ -21,4 +21,6 @@ const { field_options } = useSelectCommon( props )
 
 const { input_event, click_event, model, config } = useInputCommon( emit, VFJSelectInputConf, props,{ field_options:field_options })
 
+onMounted(async ()=>{
+})
 </script>
