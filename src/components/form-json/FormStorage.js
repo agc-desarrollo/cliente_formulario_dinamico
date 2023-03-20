@@ -17,7 +17,6 @@ export class DataOrigin{
     }
 
     async getData( key ){
-        console.log(key, this.origins_def)
         if (this.origins_def[key] == undefined) return undefined
         if (this.origins_data[key] != undefined) return this.origins_data[key]
 

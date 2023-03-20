@@ -26,3 +26,12 @@ export function putClientData( urlAPI, data ) {
     data: data
   })
 }
+
+export function actionSubmit( urlAPI ) {
+  const request = create(urlAPI)
+  return request({
+    url: '/form/action_submit',
+    method: 'post',
+    data: {}
+  })
+}
