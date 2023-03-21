@@ -2,14 +2,14 @@
     <component  v-for="(col_data) in row_data.content" :key="col_data"
             :is="COMPONENTS_REFS[ col_data.component ]" :class="col_data.class" :params="col_data.params"
             @update:modelValue="update_model" v-model="model" 
-            @click="click"/>
+            @click="click"  @blur="blur" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { COMPONENTS_REFS } from '../components'
 
-const emit  = defineEmits(['update:modelValue', 'click'])
+const emit  = defineEmits(['update:modelValue', 'click', 'blur'])
 const props = defineProps(['row_data', 'modelValue'])
 
 const model = ref( props.modelValue )
@@ -20,6 +20,10 @@ function update_model( evnt ){
 
 function click( evnt ){
     emit('click', evnt)
+}
+
+function blur( evnt ){
+    emit('blur', evnt)
 }
 
 onMounted(async ()=>{

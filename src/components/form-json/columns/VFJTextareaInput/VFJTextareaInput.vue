@@ -5,7 +5,7 @@
             <Textarea 
                 class="w-100"    v-tooltip="config.tooltip" :placeholder="config.placeholder"
                 v-model="model" :rows="config.rows" :cols="config.cols" :disabled="config.disabled" 
-                @click="click_event" @input="input_event"  />
+                @click="click_event" @input="input_event" @blur="blur_event" />
         </div>        
     </div>
 
@@ -18,5 +18,5 @@ import { useInputCommon } from '../VFJInputComposable'
 const emit  = defineEmits(['update:modelValue', 'click'])
 const props = defineProps(['params', 'modelValue'])
 
-const { input_event, click_event, model, config } = useInputCommon( emit, VFJTextareaInputConf, props )
+const { input_event, click_event, blur_event, model, config } = useInputCommon( emit, VFJTextareaInputConf, props )
 </script>

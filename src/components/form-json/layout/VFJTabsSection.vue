@@ -7,7 +7,7 @@
                     <HTMLTag 
                         :row_data="row_data" :key="row_data" 
                         v-model="model" @update:modelValue="update_model"
-                        @click="click"/>
+                        @click="click" @blur="blur"/>
                 </div>
         </TabPanel>
     </TabView>
@@ -20,11 +20,15 @@ const props = defineProps(['params', 'modelValue'])
 
 const model = ref(props.modelValue)
 
-const emit = defineEmits(['update:modelValue', 'click'])
+const emit = defineEmits(['update:modelValue', 'click', 'blur'])
 const page  = ref(0)
 
 function update_model( evnt ){
     emit('update:modelValue', evnt)
+}
+
+function blur( evnt ){
+    emit('blur', evnt)
 }
 
 function click( evnt ){

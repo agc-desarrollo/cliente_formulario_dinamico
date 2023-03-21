@@ -4,7 +4,7 @@
         <div class="input-group">
             <InputText 
                 v-tooltip="config.tooltip" :disabled="config.disabled"
-                @input="input_event" @click="click_event"
+                @input="input_event" @click="click_event" @blur="blur_event"
                 :type="config.type"  v-model="model" class="w-100" />
         </div>        
     </div>
@@ -17,5 +17,5 @@ import { useInputCommon } from '../VFJInputComposable'
 const emit  = defineEmits(['update:modelValue', 'click'])
 const props = defineProps(['params', 'modelValue'])
 
-const { input_event, click_event, model, config } = useInputCommon( emit, VFJTextInputConf, props )
+const { input_event, click_event, blur_event, model, config } = useInputCommon( emit, VFJTextInputConf, props )
 </script>

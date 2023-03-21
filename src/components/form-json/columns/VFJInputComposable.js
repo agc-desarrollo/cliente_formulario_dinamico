@@ -12,6 +12,10 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
         emit('click', { config: config.value, data: model.value, evnt:evnt })
     }
 
+    function blur_event(evnt){
+        emit('blur', { config: config.value, data: model.value, evnt:evnt })
+    }
+
     onMounted(async ()=>{
         console.log(props.modelValue, config.value.key)
         if (config.value.key != undefined && props.modelValue.data_form != undefined && props.modelValue.data_form[config.value.key] != undefined)
@@ -31,7 +35,7 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
         }
     })
 
-    return { input_event, click_event, model, config }
+    return { input_event, click_event, blur_event, model, config }
 }
 
 export function useSelectCommon( props ){

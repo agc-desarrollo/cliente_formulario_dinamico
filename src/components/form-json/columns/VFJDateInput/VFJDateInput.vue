@@ -5,7 +5,7 @@
             <Calendar :disabled="config.disabled" :inline="config.inline" :selectionMode="config.selectionMode"
                     :dateFormat="config.dateFormat" :showTime="config.showTime"
                     v-tooltip="config.tooltip" :placeholder="config.placeholder"
-                    @year-change="input_event" @date-select="input_event" @click="click_event"
+                    @year-change="input_event" @date-select="input_event" @click="click_event" @blur="blur_event"
                     v-model="model" class="w-100" />
         </div>        
     </div>
@@ -16,7 +16,7 @@ import { VFJDateInputConf } from './VFJDateInputConf'
 import { useInputCommon } from '../VFJInputComposable'
 
 const props = defineProps(['params', 'modelValue'])
-const emit  = defineEmits(['update:modelValue', 'click'])
+const emit  = defineEmits(['update:modelValue', 'click', 'blur'])
 
-const { input_event, click_event, model, config } = useInputCommon( emit, VFJDateInputConf, props )
+const { input_event, click_event, blur_event, model, config } = useInputCommon( emit, VFJDateInputConf, props )
 </script>

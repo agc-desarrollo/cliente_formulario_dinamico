@@ -2,7 +2,8 @@
     <component 
         :is="COMPONENTS_REFS[ formConfig.sections.component ]" 
         :params="formConfig.sections.content"
-        @click="click" v-model="model" @update:modelValue="update_model"></component>    
+        @click="click" @blur="blur"
+        v-model="model" @update:modelValue="update_model"></component>    
 </template>
 
 <script setup>
@@ -14,7 +15,7 @@ import { FormStorage, DataOrigin } from './FormStorage'
 
 const props = defineProps(['form_definition', 'modelValue'])
 
-const emit = defineEmits(['update:modelValue', 'submit', 'input', 'click'])
+const emit = defineEmits(['update:modelValue', 'submit', 'input', 'click', 'blur'])
 
 const model = ref(props.modelValue)
 
@@ -43,6 +44,10 @@ async function click( evnt ){
     
     if (evnt.config != undefined && BTN_ACTION_INDEX[ evnt.config.action ] != undefined) 
         await BTN_ACTION_INDEX[ evnt.config.action ]( evnt )
+}
+
+async function blur( evnt ){
+    emit( 'blur', evnt.data )
 }
 
 </script>
