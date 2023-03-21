@@ -1,9 +1,45 @@
+import axios from 'axios'
+
+export class DataOrigin{
+    origins_def = {}
+    origins_data = {}
+    
+    constructor( data_origins ){console.log(2342343,data_origins)
+        this.origins_def = this.parse_data_origin(data_origins)
+    }
+
+    parse_data_origin( input ){
+        if (input == undefined) return {}
+        let aux = {}
+        for (let c=0; c < input.length; c++)
+            aux[input[c].alias] = input[c]
+        return aux
+    }
+
+    async getData( key ){
+        if (this.origins_def[key] == undefined) return undefined
+        if (this.origins_data[key] != undefined) return this.origins_data[key]
+
+        let resp = await axios.get(this.origins_def[key].url)
+        if (resp.status == 200){
+            this.origins_data[key] = resp.data
+            return resp.data
+        } else {
+            console.log('Error!! data not found')
+            return undefined;
+        }
+    }
+}
 
 export class FormStorage {
 
     data_form      = {}
     field_options  = {}
     initial_values = {}
+
+    constructor( params = {}){
+        this.data_form = params.data_form ? params.data_form : {} 
+    }
 
     update( evnt ){
         let p = evnt.config

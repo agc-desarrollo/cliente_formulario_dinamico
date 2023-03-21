@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps(['params', 'modelValue'])
 
@@ -54,6 +54,4 @@ const ACTION_INDEX = {
     'section_goTo' : section_goTo
 }
 
-onMounted(async ()=>{
-})
 </script>

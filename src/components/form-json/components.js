@@ -13,6 +13,7 @@ import VFJTextInput     from './columns/VFJTextInput/VFJTextInput.vue'
 import VFJNumber        from './columns/VFJNumber/VFJNumber.vue'
 
 import VFJTabsSection    from './layout/VFJTabsSection.vue'
+import VFJSingleSection  from './layout/VFJSingleSection.vue'
 import VFJComponentGroup from './layout/VFJComponentGroup.vue'
 import VFJLoopFieldGroup from './layout/VFJLoopFieldGroup/VFJLoopFieldGroup.vue'
 
@@ -32,6 +33,7 @@ export const COMPONENTS_REFS = {
     'I_NUMBER' : VFJNumber,
 
     'V_TABS' : VFJTabsSection,
+    'V_SINGLE' : VFJSingleSection,
     'V_GROUP' : VFJComponentGroup,
     'V_LOOP' : VFJLoopFieldGroup
 }

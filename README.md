@@ -1,6 +1,7 @@
 # Vue3 Cliente Formulario Dinámico
 
 # Change Log
+- **0.1.7**: Los selects, radiobuttons y checkbox ahora se generan a partir de respuesta de API
 - **0.1.6**: Los campos del formulario toman los datos cargados en el mismo
 - **0.1.5**: Se realiza consulta de información de formulario
 - **0.1.4**:  Se agrega tipo de control input numerico diferenciado del control de texto; Se agrega posibilidad de configurar placeholder;
