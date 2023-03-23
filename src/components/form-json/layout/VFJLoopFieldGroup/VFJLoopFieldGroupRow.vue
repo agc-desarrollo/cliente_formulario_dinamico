@@ -5,7 +5,7 @@
         <div class="row component-group">
             <HTMLTag 
                 v-for="(row_data) in loop_data()"
-                :row_data="row_data" :key="row_data" 
+                :row_data="row_data" :key="row_data" :cont_class="row_data.class"
                 v-model="model" @update:modelValue="update_model" 
                 @click="click" />
         </div>
