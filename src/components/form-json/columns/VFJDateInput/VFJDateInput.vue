@@ -9,6 +9,7 @@
                     @year-change="input_event" @date-select="input_event" @click="click_event" @blur="blur_event"
                     v-model="model"  />
         </div>        
+        <div v-if="is_invalid()" class="invalid-feedback" :style="{display:'block'}">{{ validation_text() }}</div>
     </div>
 </template>
 
@@ -19,5 +20,5 @@ import { useInputCommon } from '../VFJInputComposable'
 const props = defineProps(['params', 'modelValue'])
 const emit  = defineEmits(['update:modelValue', 'click', 'blur'])
 
-const { input_event, click_event, blur_event, model, config, is_invalid } = useInputCommon( emit, VFJDateInputConf, props )
+const { input_event, click_event, blur_event, model, config, is_invalid, validation_text } = useInputCommon( emit, VFJDateInputConf, props )
 </script>

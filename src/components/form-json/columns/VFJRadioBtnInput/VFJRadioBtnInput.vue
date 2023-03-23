@@ -20,7 +20,7 @@ import { VFJRadioBtnInputConf } from './VFJRadioBtnInputConf'
 import { useInputCommon, useSelectCommon } from '../VFJInputComposable'
 
 const props = defineProps(['params', 'modelValue'])
-const emit  = defineEmits(['update:modelValue', 'click'])
+const emit  = defineEmits(['update:modelValue', 'click', 'blur'])
 
 const { field_options } = useSelectCommon( props )
 const { input_event, click_event, blur_event, model, config, is_invalid } = useInputCommon( emit, VFJRadioBtnInputConf, props, { field_options:field_options })

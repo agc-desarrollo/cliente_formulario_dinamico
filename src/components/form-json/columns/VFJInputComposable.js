@@ -6,13 +6,16 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const validationsRes = inject('validationRes')
     
     function is_invalid(){
+        validation_text.value = ""
         if (validationsRes.value == undefined) return false
-        return validationsRes.value[config.value.key] != undefined
+        if (validationsRes.value[config.value.key] != undefined) return true
     }
 
-    function error_text(){
-        return ''
+    function validation_text(){
+        if (validationsRes.value[config.value.key] != undefined) return validationsRes.value[config.value.key].res.text
+        return ""
     }
+
 
     function input_event(){
         emit('update:modelValue', { config: config.value, data: model.value })
@@ -45,7 +48,7 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
         }
     })
 
-    return { input_event, click_event, blur_event, is_invalid, error_text, model, config }
+    return { input_event, click_event, blur_event, is_invalid, validation_text, model, config }
 }
 
 export function useSelectCommon( props ){
