@@ -2,7 +2,7 @@
     <div :class="params.class">
         <label :for="params.field" class="form-label">{{ params.label }}</label>
         <div class="input-group">
-            <FileUpload name="demo[]" :customUpload="true" @uploader="input_event"  />
+            <FileUpload name="demo[]" :customUpload="true" @uploader="input_event" class="form-control w-100"  />
         </div>        
     </div>
 </template>

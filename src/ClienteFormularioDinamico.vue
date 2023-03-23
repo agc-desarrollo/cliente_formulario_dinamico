@@ -3,6 +3,7 @@
   <SignUp v-if="step == 0" :config="config" @hasSession="hasSession"/>
 
   <FormularioJSON v-if="step == 1 && form_def !== null"
+                    ref="form_ref"
                     :form_definition="form_def" v-model="form_storage" @update:modelValue="update_model"
                     @submit="submitForm" @input="inputRepeat" @blur="blurRepeat" @click="clickRepeat"/>
 
@@ -26,6 +27,7 @@ const step = ref(0)
 
 const INPUT_INTERVAL = 1500
 const last_sync_r = ref(0)
+const last_sync_d = ref({})
 const on_interval = ref(false)
 
 //REENVIO EVENTOS
@@ -33,6 +35,8 @@ function update_model( evnt ){ syncData(evnt); emit( 'update:modelValue', evnt )
 function inputRepeat( event ){  emit('input', event) }
 function clickRepeat( event ){ emit('click' ,event) }
 function blurRepeat( event ){ emit('blur' ,event) }
+
+const form_ref = ref()
 
 async function submitForm( evnt ){
   let res = await actionSubmit(props.config.api)
@@ -48,28 +52,29 @@ async function hasSession(){
   await callGetForm()
 }
 
+async function call_putClientData(){
+  let res = await putClientData(props.config.api, last_sync_d.value)
+  if (res) {
+    form_ref.value.refresh_validations( res.validation )
+  }
+}
+
 async function syncData( evnt ){
-  let ahora = new Date().getTime()
+  let ahora         = new Date().getTime()
+  last_sync_d.value = evnt.data_form
 
   if ((ahora - last_sync_r.value) > INPUT_INTERVAL ){
     last_sync_r.value = ahora
-
-    let res = await putClientData(props.config.api, evnt.data_form )
-    if (res) {
-      console.log('putClientData', res )
-    }
-
+    call_putClientData()
   } else {
+    
     if (!on_interval.value) {
       on_interval.value = true
       setTimeout(async () => {
         last_sync_r.value = ahora
+        on_interval.value = false
 
-        let res = await putClientData(props.config.api, evnt.data_form )
-        if (res) {
-          console.log('putClientData', res )
-        }
-
+        call_putClientData()
       }, INPUT_INTERVAL)
     }
   }

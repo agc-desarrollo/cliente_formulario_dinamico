@@ -3,7 +3,17 @@ import { ref, onMounted, inject } from 'vue'
 export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const model  = ref()
     const config = ref(props.params)
+    const validationsRes = inject('validationRes')
     
+    function is_invalid(){
+        if (validationsRes.value == undefined) return false
+        return validationsRes.value[config.value.key] != undefined
+    }
+
+    function error_text(){
+        return ''
+    }
+
     function input_event(){
         emit('update:modelValue', { config: config.value, data: model.value })
     }
@@ -35,7 +45,7 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
         }
     })
 
-    return { input_event, click_event, blur_event, model, config }
+    return { input_event, click_event, blur_event, is_invalid, error_text, model, config }
 }
 
 export function useSelectCommon( props ){

@@ -2,7 +2,7 @@
 
     <div :class="config.class">
         <label :for="config.field" class="form-label">{{ config.label }}</label>
-        <div class="input-group row">
+        <div class="form-control input-group row" :class="{ 'is-invalid': is_invalid() }">
             <div class="field-radiobutton col-12" v-for="(option) in field_options" :key="option">
                 <RadioButton inputId="{{config.field + option[config.option_id]}}" :name="config.field" 
                 @change="input_event" @click="click_event" @blur="blur_event"
@@ -23,5 +23,5 @@ const props = defineProps(['params', 'modelValue'])
 const emit  = defineEmits(['update:modelValue', 'click'])
 
 const { field_options } = useSelectCommon( props )
-const { input_event, click_event, blur_event, model, config } = useInputCommon( emit, VFJRadioBtnInputConf, props, { field_options:field_options })
+const { input_event, click_event, blur_event, model, config, is_invalid } = useInputCommon( emit, VFJRadioBtnInputConf, props, { field_options:field_options })
 </script>
