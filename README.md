@@ -1,6 +1,7 @@
 # Vue3 Cliente Formulario Dinámico
 
 # Change Log
+- **0.1.9**: Se realiza petición submit, En inputs, se agrega soporte para resaltado en fallar la validacion del campo, En caso de error de validación de un campo, debajo del mismo se muestra el texto correspondiente
 - **0.1.7**: Los selects, radiobuttons y checkbox ahora se generan a partir de respuesta de API
 - **0.1.6**: Los campos del formulario toman los datos cargados en el mismo
 - **0.1.5**: Se realiza consulta de información de formulario
