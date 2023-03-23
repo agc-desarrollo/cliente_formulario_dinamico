@@ -1,5 +1,5 @@
 <template>
-    <HTMLTag  v-for="(row_data) in params" :class="row_data.class"
+    <HTMLTag  v-for="(row_data) in params" :cont_class="row_data.class"
                 :row_data="row_data" :key="row_data"
                 v-model="model" @update:modelValue="update_model"
                 @click="click" @blur="blur"/>

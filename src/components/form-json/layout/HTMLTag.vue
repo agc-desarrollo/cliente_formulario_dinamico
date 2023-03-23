@@ -1,8 +1,10 @@
 <template>
-    <component  v-for="(col_data) in row_data.content" :key="col_data"
+    <div :class="cont_class">
+        <component  v-for="(col_data) in row_data.content" :key="col_data"
             :is="COMPONENTS_REFS[ col_data.component ]" :class="col_data.class" :params="col_data.params"
             @update:modelValue="update_model" v-model="model" 
             @click="click"  @blur="blur" />
+    </div>
 </template>
 
 <script setup>
@@ -10,7 +12,7 @@ import { ref, onMounted } from 'vue'
 import { COMPONENTS_REFS } from '../components'
 
 const emit  = defineEmits(['update:modelValue', 'click', 'blur'])
-const props = defineProps(['row_data', 'modelValue'])
+const props = defineProps(['row_data', 'modelValue', 'cont_class'])
 
 const model = ref( props.modelValue )
 
