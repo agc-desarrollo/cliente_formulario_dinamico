@@ -43,7 +43,7 @@ export class FormStorage {
 
     update( evnt ){
         let p = evnt.config
-        console.log(987979,evnt)
+        //console.log(987979,evnt)
         if ( p.list != undefined && p.list != null ){
             if (this.data_form[ p.list ] == undefined) 
                 this.data_form[ p.list ] = []

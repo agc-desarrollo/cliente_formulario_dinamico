@@ -2,7 +2,7 @@
   <div class="container">
     <ClienteFormularioDinamico 
         v-if ="conf !== null && !form_submited"
-        v-model="model" :config="conf" @submit="onSubmit" />
+        v-model="model" :config="conf" @submit="onSubmit" @blur="blur"/>
     
     <div v-if="form_submited" class="row">
       <div class="col">
@@ -23,6 +23,10 @@ const model   = ref({})
 const conf    = ref( null )
 
 const form_submited = ref(false)
+
+function blur(mo){
+  console.log(mo)
+}
 
 function onSubmit(){
   form_submited.value = true
