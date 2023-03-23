@@ -19,8 +19,12 @@ export class DataOrigin{
     async getData( key ){
         if (this.origins_def[key] == undefined) return undefined
         if (this.origins_data[key] != undefined) return this.origins_data[key]
+        
+        let cnf = this.origins_def[key]
+        if (cnf.url == undefined || cnf.url == '')
+            return cnf.options
 
-        let resp = await axios.get(this.origins_def[key].url)
+        let resp = await axios.get(cnf.url)
         if (resp.status == 200){
             this.origins_data[key] = resp.data
             return resp.data
