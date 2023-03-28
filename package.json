@@ -1,6 +1,6 @@
 {
   "name": "@agc-desarrollo/cliente_formulario_dinamico",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "main": "dist/library.js",
   "module": "dist/library.mjs",

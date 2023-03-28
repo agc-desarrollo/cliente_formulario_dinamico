@@ -1,6 +1,9 @@
 # Vue3 Cliente Formulario Dinámico
 
 # Change Log
+- **0.1.10**: Se soluciona el problema de la mala generación de la vista, Selects ya toman valores definidos en JSON, Se renombra cuit y cuil por id_user, 
+Componente de imagen funcionando correctamente, Ahora en los rows se puede configurar estilos inline se adapta la configuración del atributo class,
+Componente de contenido HTML funcional, En todos los inputs se implementa la definiciópn de clases y estilos via JSON; Se agrega soporte para definición de CSS en componente vue
 - **0.1.9**: Se realiza petición submit, En inputs, se agrega soporte para resaltado en fallar la validacion del campo, En caso de error de validación de un campo, debajo del mismo se muestra el texto correspondiente
 - **0.1.7**: Los selects, radiobuttons y checkbox ahora se generan a partir de respuesta de API
 - **0.1.6**: Los campos del formulario toman los datos cargados en el mismo
