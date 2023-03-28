@@ -43,7 +43,8 @@ onMounted(async ()=>{
 
   conf.value = {
     api: process.env.VUE_APP_API_URL,
-    id:  form_id
+    id:  form_id,
+    id_user: '20382700520'
   }
 })
 </script>
