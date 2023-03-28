@@ -21,5 +21,5 @@ import { getJSON } from '../../../../helpers/utils'
 const props = defineProps(['params', 'modelValue'])
 const emit  = defineEmits(['update:modelValue', 'click', 'blur'])
 
-const { input_event, click_event, blur_event, model, config, is_invalid, validation_text, get_contentainer_class } = useInputCommon( emit, VFJDateInputConf, props )
+const { input_event, click_event, blur_event, model, config, is_invalid, validation_text, get_contentainer_class, get_content_class } = useInputCommon( emit, VFJDateInputConf, props )
 </script>
