@@ -1,6 +1,6 @@
 <template>
   
-  <SignUp v-if="step == 0" :config="config" @hasSession="hasSession"/>
+  <!--<SignUp v-if="step == 0" :config="config" @hasSession="hasSession"/>-->
 
   <FormularioJSON v-if="step == 1 && form_def !== null"
                     ref="form_ref"
@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { getForm, putClientData, actionSubmit } from './api/form'
+import { ref, onMounted } from 'vue'
+import { getForm, putClientData, getSession, actionSubmit } from './api/form'
 import { FormStorage } from './components/form-json/FormStorage'
 import  SignUp        from './components/SignUp.vue'
 import  FormNotFound  from './components/FormNotFound.vue'
@@ -49,7 +49,7 @@ async function submitForm( evnt ){
 
 
 async function hasSession(){
-  await callGetForm()
+  
 }
 
 async function call_putClientData(){
@@ -89,4 +89,18 @@ async function callGetForm(){
   }
 }
 
+
+async function get_session(){
+  let res = await getSession(props.config.api, { id_user: props.config.id_user  })
+
+  if (res.stat) {
+    await callGetForm()
+  } else {
+    alert('Error al intentar obtener sessión')
+  }
+}
+
+onMounted(async ()=>{
+  await get_session()
+})
 </script>

@@ -33,10 +33,10 @@ const form_def = ref({
                 class: "col",
                 component: "I_TEXT",
                 params: {
-                  label: "CUIL",
+                  label: "CUIT",
                   class: "col mb-3",
                   disabled: false,
-                  key: "cuil",
+                  key: "id_user",
                   required: true,
                   autocomplete_options: "",
                   tooltip: "",
@@ -68,7 +68,7 @@ const form_def = ref({
 })
 
 async function onSubmit( evnt ){
-  let res = await getSession(props.config.api, { cuil: evnt.cuil  })
+  let res = await getSession(props.config.api, { id_user: evnt.id_user  })
 
   if (res.stat) {
     emit('hasSession', true)
@@ -77,7 +77,7 @@ async function onSubmit( evnt ){
 
 onMounted(async ()=>{
   form_storage.value = new FormStorage()
-  form_storage.value.data_form = { cuil: '' }
+  form_storage.value.data_form = { id_user: '' }
 })
 
 </script>
