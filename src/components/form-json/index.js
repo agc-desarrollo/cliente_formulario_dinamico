@@ -9,7 +9,6 @@ import RadioButton from 'primevue/radiobutton'
 import Checkbox from 'primevue/checkbox'
 import Calendar from 'primevue/calendar'
 import Button from 'primevue/button'
-import Image from 'primevue/image'
 import ColorPicker from 'primevue/colorpicker'
 import Slider from 'primevue/slider'
 import FileUpload from 'primevue/fileupload'
@@ -25,9 +24,11 @@ import "primevue/resources/themes/nova/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
+import './assets/styles.css' 
+
 export const VueFormJSON = {
     install(Vue, options) {
-        Vue.use(PrimeVue);
+        Vue.use(PrimeVue)
 
         Vue.directive('tooltip', Tooltip);
         
@@ -38,7 +39,6 @@ export const VueFormJSON = {
         Vue.component("Textarea", Textarea);
         Vue.component("Calendar", Calendar);
         Vue.component("Button", Button);
-        Vue.component("Image", Image);
         Vue.component("ColorPicker", ColorPicker);
         Vue.component("Slider", Slider);
         Vue.component("FileUpload", FileUpload);

@@ -16,6 +16,31 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
         return ""
     }
 
+    function get_contentainer_class(){
+        let cls = {}
+
+        if (config.value.class_container != undefined){
+            let cls_tmp = config.value.class_container.split(' ')
+            for (let i=0; i < cls_tmp.length; i++)
+                cls[cls_tmp[i]] = true
+        }
+        
+        cls['required'] = config.value.required ? true :  false
+        return cls
+    }
+
+    function get_content_class(){
+        let cls = {}
+
+        if (config.value.class_content != undefined){
+            let cls_tmp = config.value.class_content.split(' ')
+            for (let i=0; i < cls_tmp.length; i++)
+                cls[cls_tmp[i]] = true
+        }
+        
+        cls['is-invalid'] = is_invalid()
+        return cls
+    }
 
     function input_event(){
         emit('update:modelValue', { config: config.value, data: model.value })
@@ -48,7 +73,7 @@ export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
         }
     })
 
-    return { input_event, click_event, blur_event, is_invalid, validation_text, model, config }
+    return { input_event, click_event, blur_event, is_invalid, get_content_class, validation_text, model, config, get_contentainer_class }
 }
 
 export function useSelectCommon( props ){
