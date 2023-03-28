@@ -38,7 +38,6 @@ export const VueFormJSON = {
         Vue.component("Textarea", Textarea);
         Vue.component("Calendar", Calendar);
         Vue.component("Button", Button);
-        Vue.component("Image", Image);
         Vue.component("ColorPicker", ColorPicker);
         Vue.component("Slider", Slider);
         Vue.component("FileUpload", FileUpload);

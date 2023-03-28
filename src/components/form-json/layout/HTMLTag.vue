@@ -1,5 +1,5 @@
 <template>
-    <div :class="cont_class">
+    <div  :class="row_data.params.class">
         <component  v-for="(col_data) in row_data.content" :key="col_data"
             :is="COMPONENTS_REFS[ col_data.component ]" :class="col_data.class" :params="col_data.params"
             @update:modelValue="update_model" v-model="model" 
