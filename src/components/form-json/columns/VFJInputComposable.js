@@ -1,14 +1,5 @@
 import { ref, onMounted, inject } from 'vue'
 
-export function getJSON( str ){
-    try {
-        return JSON.parse( String( str ) )
-    } catch (error) {
-        console.log('E: ', error, str)
-        return {}
-    }
-}
-
 export function useInputCommon( emit, CONFIG_CLASS, props, optionals={} ) {
     const model  = ref()
     const config = ref(props.params)

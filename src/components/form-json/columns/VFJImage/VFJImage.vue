@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { getJSON } from '../VFJInputComposable'
+import { getJSON } from '../../../../helpers/utils'
 
 const props = defineProps(['params'])
 </script>
