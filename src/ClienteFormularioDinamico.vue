@@ -43,6 +43,7 @@ async function submitForm( evnt ){
   if (res.stat){
     emit('submit' ,evnt)
   } else {
+    alert('Revise los datos cargados.')
     console.log('error, submit', res)
   }
 }
